@@ -1,0 +1,62 @@
+footer {
+  background: #1f1f1e;
+  color: #ffffff;
+  margin-top: 100px;
+  padding: 70px 0;
+}
+
+footer a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+footer h3 {
+  color: var(--pinktwo-color);
+}
+footer ul {
+  list-style: none;
+  padding-left: 20px;
+}
+footer ul li {
+  margin: 16px 0;
+}
+
+footer .links-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr 3fr;
+}
+
+footer form {
+  margin-left: 20px;
+  margin-top: 16px;
+  position: relative;
+}
+footer form input {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 200%;
+  color: var(--dark-color);
+  border-radius: 8px;
+  border: none;
+  padding: 8px 32px;
+  width: 100%;
+}
+footer form .submit-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--pinkone-color);
+  border-radius: 8px;
+  padding: 8px 32px;
+  border: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  color: #ffffff;
+  cursor: pointer;
+}
+footer .copyright {
+  margin-top: 36px;
+}
