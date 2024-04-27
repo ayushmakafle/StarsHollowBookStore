@@ -77,25 +77,25 @@ const Header = () => {
                 <SearchInput />
               </div>
               <Link
-                to="#"
+                to="/about-us"
                 className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2 md:text-lg text-sm font-medium"
               >
                 About Us
               </Link>
               <Link
-                to="#"
+                to="/wishlist"
                 className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
               >
                 <FontAwesomeIcon icon={faHeart} title="Wishlist" />
               </Link>
               <Link
-                to="#"
+                to="/wishlist"
                 className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
               >
                 <FontAwesomeIcon icon={faCartShopping} title="Cart" />
               </Link>
               <Link
-                to="#"
+                to="/user-dashboard"
                 className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
               >
                 <FontAwesomeIcon icon={faUser} title="User Dashboard" />
@@ -130,19 +130,19 @@ const Header = () => {
             <div className="absolute z-10 top-16 right-0 w-full bg-white shadow-md">
               <div className="p-4">
                 <Link
-                  to="#"
+                  to="/about-us"
                   className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
                 >
                   About Us
                 </Link>
                 <Link
-                  to="#"
+                  to="/wishlist"
                   className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
                 >
                   <FontAwesomeIcon icon={faHeart} /> Wishlist
                 </Link>
                 <Link
-                  to="#"
+                  to="/user-dashboard"
                   className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
                 >
                   <FontAwesomeIcon icon={faUser} /> User Dashboard
