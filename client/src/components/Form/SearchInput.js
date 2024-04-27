@@ -1,3 +1,5 @@
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 //import { useSearch } from "../../context/search";
 //import axios from "axios";
@@ -27,23 +29,31 @@ const SearchInput = () => {
         //onSubmit={handleSubmit}
       >
         <input
-          className="form-control me-1"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          className="md:w-52 w-36"
+          style={{
+            padding: "8px 8px",
+            borderRadius: "10px",
+            marginRight: "6px",
+          }}
           //value={values.keyword}
           //onChange={(e) => setValues({ ...values, keyword: e.target.value })}
         />
         <button
-          className="btn btn-primary"
           type="submit"
           style={{
-            padding: "10px 17px",
-            backgroundColor: "#ef5e99",
-            fontSize: "18px",
+            padding: "8px 10px",
+            backgroundColor: "#ac3b61",
+            fontSize: "14px",
+            borderRadius: "10px",
           }}
         >
-          Search
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            style={{ color: "white" }}
+          />
         </button>
       </form>
     </>
