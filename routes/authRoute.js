@@ -10,4 +10,8 @@ router.post("/login", AuthController.loginController);
 
 router.get("/test", requireSignIn, isAdmin, AuthController.testController);
 
+router.get("/user-auth", requireSignIn, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
 export default router;
