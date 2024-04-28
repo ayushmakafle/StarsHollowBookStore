@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  console.log("auth", auth);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -140,7 +141,9 @@ const Header = () => {
                     <div className="absolute z-10 mt-2 w-32 shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                       <div className="py-1">
                         <Link
-                          to="/user-dashboard"
+                          to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`}
                           className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Dashboard
@@ -198,10 +201,10 @@ const Header = () => {
                   <FontAwesomeIcon icon={faHeart} /> Wishlist
                 </Link>
                 <Link
-                  to="/user-dashboard"
+                  to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
                   className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
                 >
-                  <FontAwesomeIcon icon={faUser} /> User Dashboard
+                  <FontAwesomeIcon icon={faUser} /> Dashboard
                 </Link>
               </div>
             </div>

@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./components/Pages/User/Dashboard";
 import PrivateRoute from "./components/Routes/PrivateRoute";
+import AdminRoute from "./components/Routes/AdminRoute";
+import AdminDashboard from "./components/Pages/Admin/AdminDashboard";
 
 function App() {
   return (
@@ -21,8 +23,11 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
-        <Route path="/user-dashboard" element={<PrivateRoute />}>
-          <Route path="/user-dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<PrivateRoute />}>
+          <Route path="user" element={<Dashboard />} />
+        </Route>
+        <Route path="/dashboard" element={<AdminRoute />}>
+          <Route path="admin" element={<AdminDashboard />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
