@@ -1,18 +1,18 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const userSchema = Schema({
-  
+const userSchema = Schema(
+  {
     username: {
       type: String,
       required: true,
       trim: true,
     },
-    FirstName:{
+    firstName: {
       type: String,
       required: true,
       trim: true,
     },
-    LastName:{
+    lastName: {
       type: String,
       required: true,
       trim: true,
@@ -38,16 +38,16 @@ const userSchema = Schema({
       type: Number,
       default: 0,
     },
-    isEmailVerified:{
+    isEmailVerified: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
-    token:{
-      type:String,
-      default:''
-    }
+    token: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 export default User;

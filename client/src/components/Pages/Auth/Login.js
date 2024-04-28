@@ -2,29 +2,37 @@ import React, { useState } from "react";
 import LogoImg from "../../../assets/images/logo.png";
 import "../../../assets/stylings/Auth.css";
 import Layout from "../../Layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const UserLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-    address: "",
-  });
+  const [visible, setVisible] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+
+    try {
+      const res = await axios.post(`/api/v1/auth/login`, {
+        email,
+        password,
+      });
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -45,23 +53,40 @@ const UserLogin = () => {
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2"
                   placeholder="Enter your email"
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <input
                   placeholder="Enter your password"
-                  type="password"
+                  type={visible ? "text" : "password"}
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full border-gray-300 rounded-md p-2"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full border-gray-300 rounded-md p-2 pr-10"
                   required
                 />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  {visible ? (
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setVisible(false)}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faEyeSlash}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setVisible(true)}
+                    />
+                  )}
+                </div>
               </div>
               <div>
                 <button

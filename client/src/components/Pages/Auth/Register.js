@@ -2,29 +2,66 @@ import React, { useState } from "react";
 import LogoImg from "../../../assets/images/logo.png";
 import "../../../assets/stylings/Auth.css";
 import Layout from "../../Layout/Layout";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { toast } from "react-toastify";
 const UserRegistration = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-    address: "",
-  });
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [visible, setVisible] = useState("");
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+
+    // Validation checks
+    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    if (!password.match(passwordRegex)) {
+      return toast.error(
+        "Password must be at least 8 characters, including one special character."
+      );
+    }
+
+    if (!email.match(emailRegex)) {
+      return toast.error("Please enter a valid email address.");
+    }
+    if (password !== confirmPassword) {
+      return toast.error("Passwords do not match.");
+    }
+
+    try {
+      const res = await axios.post(`/api/v1/auth/register`, {
+        firstName,
+        lastName,
+        username,
+        email,
+        phoneNumber,
+        address,
+        password,
+      });
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/login");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -45,8 +82,8 @@ const UserRegistration = () => {
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2"
                   placeholder="Enter your email"
                   required
@@ -57,8 +94,8 @@ const UserRegistration = () => {
                   placeholder="Enter your username"
                   type="text"
                   name="username"
-                  value={formData.username}
-                  onChange={handleChange}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2"
                   required
                 />
@@ -69,8 +106,8 @@ const UserRegistration = () => {
                     placeholder="Enter your First Name"
                     type="text"
                     name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     className="block w-full border-gray-300 rounded-md p-2"
                     required
                   />
@@ -80,8 +117,8 @@ const UserRegistration = () => {
                     placeholder="Enter your Last Name"
                     type="text"
                     name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     className="block w-full border-gray-300 rounded-md p-2"
                     required
                   />
@@ -93,42 +130,76 @@ const UserRegistration = () => {
                   placeholder="Enter your phone number"
                   type="tel"
                   name="phoneNumber"
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2"
                   required
                 />
                 <small>Format: 123-456-7890</small>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <input
                   placeholder="Enter your password"
-                  type="password"
+                  type={visible ? "text" : "password"}
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full border-gray-300 rounded-md p-2"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full border-gray-300 rounded-md p-2 pr-10"
                   required
                 />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  {visible ? (
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setVisible(false)}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faEyeSlash}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setVisible(true)}
+                    />
+                  )}
+                </div>
               </div>
-              <div className="mb-4">
+
+              <div className="mb-4 relative">
                 <input
                   placeholder="confirm password"
-                  type="password"
                   name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="block w-full border-gray-300 rounded-md p-2"
+                  type={confirmPasswordVisible ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="block w-full border-gray-300 rounded-md p-2 pr-10"
                   required
                 />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  {confirmPasswordVisible ? (
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setConfirmPasswordVisible(false)}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faEyeSlash}
+                      className="cursor-pointer"
+                      size={20}
+                      onClick={() => setConfirmPasswordVisible(true)}
+                    />
+                  )}
+                </div>
               </div>
               <div className="mb-4">
                 <input
                   placeholder="Enter your address"
                   name="address"
-                  value={formData.address}
-                  onChange={handleChange}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2"
                   required
                 />

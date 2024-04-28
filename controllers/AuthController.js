@@ -5,8 +5,8 @@ import JWT from "jsonwebtoken";
 const registerController = async (req, res) => {
   try {
     const {
-      FirstName,
-      LastName,
+      firstName,
+      lastName,
       username,
       email,
       password,
@@ -40,8 +40,8 @@ const registerController = async (req, res) => {
 
     const hashedPassword = await hashPassword(password);
     const user = await new userModel({
-      FirstName,
-      LastName,
+      firstName,
+      lastName,
       username,
       email,
       phoneNumber,
