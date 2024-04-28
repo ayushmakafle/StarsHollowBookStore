@@ -8,21 +8,42 @@ import {
   faHeart,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import SearchInput from "../Form/SearchInput";
 import "../../assets/stylings/Navbar.css";
 
 import LogoImg from "../../assets/images/logo.png";
+import { useAuth } from "../../context/auth";
+import { toast } from "react-toastify";
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const toggleUserDropdown = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+  };
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successful");
+    navigate("/login");
   };
 
   return (
@@ -94,12 +115,47 @@ const Header = () => {
               >
                 <FontAwesomeIcon icon={faCartShopping} title="Cart" />
               </Link>
-              <Link
-                to="/user-dashboard"
-                className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
-              >
-                <FontAwesomeIcon icon={faUser} title="User Dashboard" />
-              </Link>
+
+              {!auth.user ? (
+                <Link
+                  to="/login"
+                  className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
+                >
+                  <FontAwesomeIcon icon={faUser} title="User Dashboard" />
+                </Link>
+              ) : (
+                <Link className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium">
+                  <button
+                    onClick={toggleUserDropdown}
+                    className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
+                  >
+                    <FontAwesomeIcon icon={faUser} title="User Dashboard" />
+                    &nbsp;
+                    {isUserDropdownOpen && <FontAwesomeIcon icon={faAngleUp} />}
+                    {!isUserDropdownOpen && (
+                      <FontAwesomeIcon icon={faAngleDown} />
+                    )}
+                  </button>
+                  {isUserDropdownOpen && (
+                    <div className="absolute z-10 mt-2 w-32 shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                      <div className="py-1">
+                        <Link
+                          to="/user-dashboard"
+                          className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Dashboard
+                        </Link>
+                        <Link
+                          onClick={handleLogout}
+                          className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Logout
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </Link>
+              )}
             </div>
           </div>
         </div>

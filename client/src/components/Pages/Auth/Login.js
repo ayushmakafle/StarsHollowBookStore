@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth } from "../../../context/auth";
 
 const UserLogin = () => {
+  const [auth, setAuth] = useAuth();
   const [visible, setVisible] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +27,12 @@ const UserLogin = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
         navigate("/");
       } else {
         toast.error(res.data.message);
