@@ -1,62 +1,61 @@
-footer {
-  background: #1f1f1e;
-  color: #ffffff;
-  margin-top: 100px;
-  padding: 70px 0;
-}
-
-footer a {
-  text-decoration: none;
-  color: #ffffff;
-}
-
-footer h3 {
-  color: var(--pinktwo-color);
-}
-footer ul {
-  list-style: none;
-  padding-left: 20px;
-}
-footer ul li {
-  margin: 16px 0;
-}
-
-footer .links-container {
-  display: grid;
-  grid-template-columns: 2fr 2fr 3fr;
-}
-
-footer form {
-  margin-left: 20px;
-  margin-top: 16px;
-  position: relative;
-}
-footer form input {
-  font-family: "Poppins", sans-serif;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 200%;
-  color: var(--dark-color);
-  border-radius: 8px;
-  border: none;
-  padding: 8px 32px;
+.rune-footer {
+  height: 300px;
   width: 100%;
-}
-footer form .submit-btn {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--pinkone-color);
-  border-radius: 8px;
-  padding: 8px 32px;
-  border: 0;
-  font-family: "Poppins", sans-serif;
-  font-weight: normal;
-  font-size: 16px;
-  color: #ffffff;
-  cursor: pointer;
-}
-footer .copyright {
-  margin-top: 36px;
+  background-color: #eee2dc;
+  color: #800000;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    background-color: #123c69;
+    padding-top: 20px;
+    height: auto;
+  }
+
+  .side-a {
+    width: 386px;
+
+    @media screen and (max-width: 768px) {
+      align-items: center;
+    }
+
+    p {
+      font-family: Helvetica;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .text {
+      @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          font-family: Helvetica;
+          font-size: 14px;
+          font-weight: 700;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+
+  .side-b {
+    width: 386px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    @media screen and (max-width: 768px) {
+      align-items: center;
+      justify-content: center;
+      margin-top: 100px;
+    }
+
+    img {
+      height: 40px;
+      width: 40px;
+      margin-left: 16px;
+    }
+  }
 }

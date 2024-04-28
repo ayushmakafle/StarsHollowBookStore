@@ -11,8 +11,10 @@ const PageNotFound = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center mt-20">
-        <h1 className="text-9xl text-pink-900 font-bold">404</h1>
-        <h3 className="text-3xl text-pink-950 mt-2">Oops! Page Not Found </h3>
+        <h1 className="md:text-9xl text-5xl text-pink-900 font-bold">404</h1>
+        <h3 className="md:text-3xl text-lg text-pink-950 mt-2">
+          Oops! Page Not Found{" "}
+        </h3>
         <button
           onClick={goBack}
           style={{

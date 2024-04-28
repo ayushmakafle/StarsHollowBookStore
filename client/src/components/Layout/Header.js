@@ -27,17 +27,17 @@ const Header = () => {
 
   return (
     <>
-      <nav className="desktop-nav">
-        <div className="max-w-7xl mx-auto p-4 ">
+      <nav className="desktop-nav h-32">
+        <div className="max-w-7xl mx-auto pt-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <div className="hover:border-b border-pink-800 px-3 py-2">
                 <Link to="/">
-                  <img className="block h-16 w-16" src={LogoImg} alt="Logo" />
+                  <img className="h-24 w-24 my-10" src={LogoImg} alt="Logo" />
                 </Link>
               </div>
 
-              <div className="nav-links relative">
+              <div className="nav-links relative ml-4">
                 <button
                   onClick={toggleDropdown}
                   className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
