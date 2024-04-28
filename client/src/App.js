@@ -4,6 +4,8 @@ import Layout from "./components/Layout/Layout";
 import LandingPage from "./components/Pages/LandingPage";
 import AboutUs from "./components/Pages/AboutUs";
 import PageNotFound from "./components/Pages/PageNotFound";
+import UserRegistration from "./components/Pages/Auth/Register";
+import UserLogin from "./components/Pages/Auth/Login";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/register" element={<UserRegistration />} />
+        <Route path="/login" element={<UserLogin />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
