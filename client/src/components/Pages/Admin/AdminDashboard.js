@@ -1,18 +1,29 @@
 import React from "react";
 import Layout from "../../Layout/Layout";
 import { useAuth } from "../../../context/auth";
+import AdminMenu from "./AdminMenu";
+
 const AdminDashboard = () => {
   const [auth] = useAuth();
+
   return (
     <Layout>
-      <div className="container-fluid m-3 p-3">
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <div className="card w-75 p-3">
-              <h3> Admin Name : {auth?.user?.username}</h3>
-              <h3> Admin Email : {auth?.user?.email}</h3>
-              <h3> Admin Contact : {auth?.user?.phoneNumber}</h3>
+      <div className="container mx-auto my-3 px-3">
+        <div className="md:flex">
+          <div className="md:w-1/4">
+            <AdminMenu />
+          </div>
+          <div className="md:w-3/4">
+            <div className="bg-white shadow-md p-4 rounded-md">
+              <h3 className="text-xl font-semibold mb-4">Admin Details</h3>
+              <div className="mb-4">
+                <h4 className="text-lg font-medium">Admin Name:</h4>
+                <p>{auth?.user?.username}</p>
+              </div>
+              <div className="mb-4">
+                <h4 className="text-lg font-medium">Admin Email:</h4>
+                <p>{auth?.user?.email}</p>
+              </div>
             </div>
           </div>
         </div>

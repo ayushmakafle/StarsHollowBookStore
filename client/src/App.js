@@ -12,6 +12,9 @@ import Dashboard from "./components/Pages/User/Dashboard";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import AdminRoute from "./components/Routes/AdminRoute";
 import AdminDashboard from "./components/Pages/Admin/AdminDashboard";
+import CreateGenre from "./components/Pages/Admin/CreateGenre";
+import CreateBook from "./components/Pages/Admin/CreateBook";
+import StarsHollowUsers from "./components/Pages/Admin/StarsHollowUsers";
 
 function App() {
   return (
@@ -28,6 +31,14 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/create-genre" element={<CreateGenre />} />
+          <Route path="admin/create-book" element={<CreateBook />} />
+          {/* <Route
+            path="admin/book/:slug"
+            element={<UpdateProduct/>}
+          /> */}
+          {/* <Route path="admin/books" element={<Books/>} /> */}
+          <Route path="admin/users" element={<StarsHollowUsers />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
