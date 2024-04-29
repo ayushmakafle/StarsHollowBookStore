@@ -13,16 +13,19 @@ const AdminDashboard = () => {
           <div className="md:w-1/4">
             <AdminMenu />
           </div>
-          <div className="md:w-3/4">
+          <div className="md:w-3/4 m-4 mt-12">
             <div className="bg-white shadow-md p-4 rounded-md">
-              <h3 className="text-xl font-semibold mb-4">Admin Details</h3>
-              <div className="mb-4">
-                <h4 className="text-lg font-medium">Admin Name:</h4>
-                <p>{auth?.user?.username}</p>
-              </div>
-              <div className="mb-4">
-                <h4 className="text-lg font-medium">Admin Email:</h4>
-                <p>{auth?.user?.email}</p>
+              <h1
+                className="mb-3 text-pink-800 font-bold text-4xl text-center"
+                style={{
+                  fontFamily: "sans-serif",
+                }}
+              >
+                Hello {auth?.user?.username}!
+              </h1>{" "}
+              <div className="text-2xl text-pink-900 text-center">
+                You've arrived at the heart of Stars Hollow Bookstore's admin
+                panel.
               </div>
             </div>
           </div>

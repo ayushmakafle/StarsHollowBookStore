@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const UserMenu = () => {
   return (
     <div className="text-center">
-      <h4 className="font-semibold text-pink-800">User Panel</h4>
+      <h4 className="font-semibold text-pink-800 text-3xl my-4">User Panel</h4>
       <div className="space-y-1">
         <NavLink
           to="/dashboard/user/profile"

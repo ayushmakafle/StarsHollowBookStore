@@ -13,29 +13,28 @@ const UserDashboard = () => {
   return (
     <Layout>
       <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded"
+        className="hover:bg-pink-400 font-bold m-1 py-2 px-4 rounded"
         onClick={goBack}
       >
         <span
           role="img"
           aria-label="Back Arrow"
-          className="text-pink-500"
-          style={{ color: "#f38dbc" }}
+          className="text-pink-800 hover:text-white "
         >
           ❮❮
         </span>
       </button>
-      <div className="container-fluid mt-3 mb-3">
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 md:col-span-3">
+      <div className="container mx-auto my-3 px-3">
+        <div className="md:flex">
+          <div className="md:w-1/4">
             <UserMenu />
           </div>
 
-          <div className="col-span-12 md:col-span-9">
-            <div className="card p-3 flex items-center m-5">
+          <div className="md:w-3/4 m-4">
+            <div className="bg-white shadow-md p-4 rounded-md">
               <div>
                 <h1
-                  className="mb-3 text-pink-500 font-normal text-center"
+                  className="mb-3 text-pink-800 font-bold text-4xl text-center"
                   style={{
                     fontFamily: "sans-serif",
                   }}
@@ -43,7 +42,7 @@ const UserDashboard = () => {
                   Hello {auth?.user?.username}!
                 </h1>
                 <h5
-                  className="text-pink-600 font-medium text-center"
+                  className="text-pink-800 text-xl font-medium text-center"
                   style={{
                     fontFamily: "Poppins, sans-serif",
                   }}

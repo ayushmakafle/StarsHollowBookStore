@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const AdminMenu = () => {
   return (
     <div className="text-center">
-      <h4 className="font-semibold text-pink-800">Admin Panel</h4>
+      <h4 className="font-semibold text-3xl my-4 text-pink-800">Admin Panel</h4>
       <div className="space-y-1">
         <NavLink
           to="/dashboard/admin/create-genre"
