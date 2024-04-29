@@ -12,7 +12,7 @@ const GenreForm = ({ handleSubmit, value, setValue }) => {
       />
       <button
         type="submit"
-        className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg mt-2"
+        className="bg-pink-800 hover:bg-pink-900 text-white font-semibold py-2 px-4 rounded-lg mt-2"
       >
         Submit
       </button>

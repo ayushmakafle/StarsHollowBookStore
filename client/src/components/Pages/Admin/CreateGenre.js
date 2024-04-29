@@ -90,8 +90,8 @@ const CreateGenre = () => {
           <div className="col-span-12 md:col-span-3">
             <AdminMenu />
           </div>
-          <div className="col-span-12 md:col-span-9">
-            <h1 className="text-pink-500 text-3xl mb-5">Manage Genres</h1>
+          <div className="md:ml-10 mt-10 col-span-12 md:col-span-9">
+            <h1 className="text-pink-800 text-3xl mb-5">Manage Genres</h1>
             <div className="p-3">
               <GenreForm
                 handleSubmit={handleSubmit}
@@ -100,22 +100,24 @@ const CreateGenre = () => {
               />
             </div>
             <div className="w-full">
-              <table className="w-full border-collapse border border-gray-300">
+              <table className="w-full rounded-lg">
                 <thead>
-                  <tr className="bg-pink-500 text-white">
-                    <th className="p-2 text-center">S.No.</th>
-                    <th className="p-2">Name</th>
-                    <th className="p-2">Actions</th>
+                  <tr className="bg-pink-800 text-white rounded-lg">
+                    <th className="p-2 text-center rounded-tl-lg">S.No.</th>
+                    <th className="p-2 text-center ">Name</th>
+                    <th className="p-2 text-center rounded-tr-lg">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {genres.map((genre, index) => (
-                    <tr key={genre._id} className="border border-gray-300">
-                      <td className="p-2 text-center">{index + 1}</td>
-                      <td className="p-2">{genre.name}</td>
-                      <td className="p-2">
+                    <tr key={genre._id} className="border border-gray-300 ">
+                      <td className="p-2 text-center flex items-center justify-center">
+                        {index + 1}
+                      </td>
+                      <td className="p-2 text-center">{genre.name}</td>
+                      <td className="p-2 flex items-center justify-center md:gap-6">
                         <button
-                          className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-1 px-3 rounded mr-2"
+                          className="bg-pink-800 hover:bg-pink-900 text-white font-semibold py-1 px-3 rounded mr-2"
                           onClick={() => {
                             setVisible(true);
                             setUpdatedName(genre.name);
@@ -125,7 +127,7 @@ const CreateGenre = () => {
                           Edit
                         </button>
                         <button
-                          className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-1 px-3 rounded"
+                          className="bg-pink-800 hover:bg-pink-900 text-white font-semibold py-1 px-3 rounded"
                           onClick={() => handleDelete(genre._id)}
                         >
                           Delete

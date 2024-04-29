@@ -1,187 +1,164 @@
-// import React, { useState, useEffect } from "react";
-// //import MainNavbar from '../components/Navbar'
-// import { useNavigate } from "react-router-dom";
-// import AdminMenu from "./AdminMenu";
-// import { toast } from "react-toastify";
-// import axios from "axios";
-// import { Select } from "antd";
-// const { Option } = Select;
-
-// const CreateBook = () => {
-//   const navigate = useNavigate();
-
-//   const [categories, setCategories] = useState([]);
-//   const [category, setCategory] = useState([]);
-//   const [photo, setPhoto] = useState("");
-//   const [name, setName] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [price, setPrice] = useState("");
-//   const [quantity, setQuantity] = useState("");
-//   const [shipping, setShipping] = useState("");
-
-//   //get all categories
-//   const getAllCategory = async () => {
-//     try {
-//       const { data } = await axios.get("/api/v1/category/get-category");
-//       if (data.success) {
-//         setCategories(data?.category);
-//       }
-//     } catch (error) {
-//       console.log(error);
-//       toast.error("something went wrong while getting categories");
-//     }
-//   };
-
-//   useEffect(() => {
-//     getAllCategory();
-//   }, []);
-
-//   //create book
-//   const handleCreate = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const bookData = new FormData();
-//       bookData.append("name", name);
-//       bookData.append("description", description);
-//       bookData.append("price", price);
-//       bookData.append("quantity", quantity);
-//       bookData.append("photo", photo);
-//       bookData.append("category", category);
-//       const { data } = await axios.post("/api/v1/book/create-book", bookData);
-//       if (data.success) {
-//         toast.success("Book created successfully");
-//         navigate("/dashboard/admin/books");
-//       } else {
-//         toast.error(data?.message);
-//       }
-//     } catch (error) {
-//       console.log(error);
-//       toast.error("Something went wrong while creating book");
-//     }
-//   };
-
-//   return (
-//     <>
-//       {/* <MainNavbar /> */}
-//       <div className="container-fluid m-3 p-3">
-//         <div className="row">
-//           <div className="col-md-3">
-//             <AdminMenu />
-//           </div>
-//           <div className="col-md-9">
-//             <h1 style={{ color: "#ef5e99", margin: "20px" }}>Create Books</h1>
-//             <div className="m-1 w-75">
-//               <Select
-//                 bordered={false}
-//                 placeholder="select a category"
-//                 size="large"
-//                 showSearch
-//                 className="form-select mb-3"
-//                 onChange={(value) => {
-//                   setCategory(value);
-//                 }} //value not from react from css
-//               >
-//                 {categories?.map((c) => (
-//                   <Option key={c._id} value={c._id}>
-//                     {c.name}
-//                   </Option>
-//                 ))}
-//               </Select>
-//               <div className="mb-3">
-//                 <label className="btn btn-outline-primary col-md-12">
-//                   {photo ? photo.name : "Upload Photo"}
-//                   <input
-//                     type="file"
-//                     name="photo"
-//                     accept="image/*"
-//                     onChange={(e) => setPhoto(e.target.files[0])}
-//                     hidden
-//                   />
-//                 </label>
-//               </div>
-//               {/* preview image using browser properties*/}
-//               <div className="mb-3">
-//                 {photo && (
-//                   <div className="text-center">
-//                     <img
-//                       src={URL.createObjectURL(photo)}
-//                       alt="book photo"
-//                       height={"200px"}
-//                       className="img img-responsive"
-//                     />
-//                   </div>
-//                 )}
-//               </div>
-//               <div className="mb-3">
-//                 <input
-//                   type="text"
-//                   value={name}
-//                   placeholder="Enter Book Name"
-//                   className="form-control"
-//                   onChange={(e) => setName(e.target.value)}
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <input
-//                   type="text"
-//                   value={description}
-//                   placeholder="Enter Book Description"
-//                   className="form-control"
-//                   onChange={(e) => setDescription(e.target.value)}
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <input
-//                   type="number"
-//                   value={price}
-//                   placeholder="Enter Book Price"
-//                   className="form-control"
-//                   onChange={(e) => setPrice(e.target.value)}
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <input
-//                   type="number"
-//                   value={quantity}
-//                   placeholder="Enter Quantity"
-//                   className="form-control"
-//                   onChange={(e) => setQuantity(e.target.value)}
-//                 />
-//               </div>
-//               <div className="mb-3">
-//                 <Select
-//                   bordered={false}
-//                   placeholder="Select Shipping"
-//                   className="form-select mb-3"
-//                   onChange={(value) => setShipping(value)}
-//                 >
-//                   <Option value="0">No</Option>
-//                   <Option value="1">Yes</Option>
-//                 </Select>
-//               </div>
-//               <div className="mb-3 text-center">
-//                 <button
-//                   className="btn btn-primary"
-//                   onClick={handleCreate}
-//                   style={{ backgroundColor: "#ef5e99" }}
-//                 >
-//                   Create Book
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default CreateBook;
-
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import AdminMenu from "./AdminMenu.js";
+import { toast } from "react-toastify";
+import axios from "axios";
+import Layout from "../../Layout/Layout.js";
 
 const CreateBook = () => {
-  return <div>create book</div>;
+  const navigate = useNavigate();
+
+  const [genres, setGenres] = useState([]);
+  const [genre, setGenre] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [shipping, setShipping] = useState("");
+
+  // Fetch all genres
+  const getAllGenres = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/genre/get-genre");
+      if (data.success) {
+        setGenres(data.genre);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while fetching genres");
+    }
+  };
+
+  useEffect(() => {
+    getAllGenres();
+  }, []);
+
+  // Handle book creation
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    try {
+      const bookData = new FormData();
+      bookData.append("name", name);
+      bookData.append("description", description);
+      bookData.append("price", price);
+      bookData.append("quantity", quantity);
+      bookData.append("photo", photo);
+      bookData.append("genre", genre);
+      const { data } = await axios.post("/api/v1/book/create-book", bookData);
+      if (data.success) {
+        toast.success("Book created successfully");
+        navigate("/dashboard/admin/books");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while creating book");
+    }
+  };
+
+  return (
+    <Layout>
+      <div className="container mx-auto px-4 py-3">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 md:col-span-3">
+            <AdminMenu />
+          </div>
+          <div className="ml-10 mt-10 col-span-12 md:col-span-9">
+            <h1 className="text-pink-800 text-3xl mb-5">Add Books</h1>
+            <div className="w-full max-w-lg">
+              <select
+                className="form-select mb-3 w-full rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2"
+                onChange={(e) => setGenre(e.target.value)}
+                value={genre}
+              >
+                <option value="">Select a genre</option>
+                {genres.map((genre) => (
+                  <option key={genre._id} value={genre._id}>
+                    {genre.name}
+                  </option>
+                ))}
+              </select>
+              <div className="mb-3">
+                <label
+                  className="btn btn-primary p-2 w-full rounded-md"
+                  style={{ backgroundColor: "#9D174D", color: "white" }}
+                >
+                  {photo ? photo.name : "Upload Photo"}
+                  <input
+                    type="file"
+                    name="photo"
+                    accept="image/*"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              <div className="mb-3">
+                {photo && (
+                  <div className="text-center">
+                    <img
+                      src={URL.createObjectURL(photo)}
+                      alt="book photo"
+                      height={"200px"}
+                      className="img img-responsive"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  value={name}
+                  placeholder="Enter Book Name"
+                  className="form-control rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2 w-full"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  value={description}
+                  placeholder="Enter Book Description"
+                  className="form-control rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2 w-full"
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="number"
+                  value={price}
+                  placeholder="Enter Book Price"
+                  className="form-control rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2 w-full"
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="number"
+                  value={quantity}
+                  placeholder="Enter Quantity"
+                  className="form-control rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2 w-full"
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+              </div>
+              <div className="mb-3 text-center">
+                <button
+                  className="btn btn-primary p-2 w-full rounded-md"
+                  onClick={handleCreate}
+                  style={{ backgroundColor: "#9D174D", color: "white" }}
+                >
+                  Create Book
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
 };
 
 export default CreateBook;
