@@ -17,6 +17,8 @@ import StarsHollowUsers from "./components/Pages/Admin/StarsHollowUsers";
 import Profile from "./components/Pages/User/Profile";
 import MyOrders from "./components/Pages/User/MyOrders";
 import UserDashboard from "./components/Pages/User/UserDashboard";
+import Books from "./components/Pages/Admin/Books";
+import UpdateBook from "./components/Pages/Admin/UpdateBook";
 
 function App() {
   return (
@@ -37,11 +39,8 @@ function App() {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-genre" element={<CreateGenre />} />
           <Route path="admin/create-book" element={<CreateBook />} />
-          {/* <Route
-            path="admin/book/:slug"
-            element={<UpdateProduct/>}
-          /> */}
-          {/* <Route path="admin/books" element={<Books/>} /> */}
+          <Route path="admin/book/:slug" element={<UpdateBook />} />
+          <Route path="admin/books" element={<Books />} />
           <Route path="admin/users" element={<StarsHollowUsers />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
