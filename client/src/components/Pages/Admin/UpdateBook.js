@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminMenu from "./AdminMenu.js";
 import Layout from "../../Layout/Layout";
+import "../../../assets/stylings/AdminDash.css";
+
+import CloseIconImg from "../../../assets/images/crossIcon.png";
 
 const UpdateBook = () => {
   const navigate = useNavigate();
@@ -16,6 +19,7 @@ const UpdateBook = () => {
   const [quantity, setQuantity] = useState("");
   const [photo, setPhoto] = useState("");
   const [id, setId] = useState("");
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // State for delete modal visibility
 
   // Get single book
   const getSingleBook = async () => {
@@ -46,7 +50,7 @@ const UpdateBook = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong in getting category");
+      toast.error("Something went wrong in getting genre");
     }
   };
 
@@ -54,7 +58,6 @@ const UpdateBook = () => {
     getAllGenres();
   }, []);
 
-  // Update book function
   // Update book function
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -80,6 +83,38 @@ const UpdateBook = () => {
       console.log(error);
       toast.error("Something went wrong");
     }
+  };
+  const showDeleteModal = () => {
+    setIsDeleteModalVisible(true);
+  };
+
+  const handleDelete = async () => {
+    setIsDeleteModalVisible(false);
+    try {
+      // Delete book from the database
+      const { data } = await axios.delete(`/api/v1/book/delete-book/${id}`);
+
+      if (data?.success) {
+        // If deletion from the database is successful, update the book list
+        const updatedBookList = genres.filter((book) => book._id !== id);
+        setGenres(updatedBookList);
+
+        toast.success("Book Deleted Successfully");
+        navigate("/dashboard/admin/books");
+      } else {
+        toast.error("Failed to delete book");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalVisible(false);
+  };
+  const handleCloseModal = () => {
+    setIsDeleteModalVisible(false);
   };
 
   return (
@@ -132,7 +167,6 @@ const UpdateBook = () => {
                     <img
                       src={URL.createObjectURL(photo)}
                       alt="book_photo"
-                      height={"200px"}
                       className="img img-responsive"
                     />
                   </div>
@@ -141,8 +175,7 @@ const UpdateBook = () => {
                     <img
                       src={`/api/v1/book/book-photo/${id}`}
                       alt="book_photo"
-                      height={"200px"}
-                      className="img img-responsive"
+                      className="img img-responsive "
                     />
                   </div>
                 )}
@@ -190,7 +223,16 @@ const UpdateBook = () => {
                     onClick={handleUpdate}
                     style={{ backgroundColor: "#9D174D", color: "white" }}
                   >
-                    UPDATE PRODUCT
+                    UPDATE BOOK
+                  </button>
+                </div>
+                <div style={{ margin: "5px" }}>
+                  <button
+                    className="btn btn-primary p-2 w-full rounded-md"
+                    onClick={showDeleteModal}
+                    style={{ backgroundColor: "#9D174D", color: "white" }}
+                  >
+                    DELETE BOOK
                   </button>
                 </div>
               </div>
@@ -198,6 +240,37 @@ const UpdateBook = () => {
           </div>
         </div>
       </div>
+      {isDeleteModalVisible && (
+        <div className="modal-wrapper">
+          <div className="modal">
+            <button className="close-button" onClick={handleCloseModal}>
+              <img src={CloseIconImg} className="w-8 h-8" />
+            </button>
+            <div className="modal-content">
+              <h2 className="font-bold text-3xl my-2">Confirm Deletion</h2>
+              <p className="text-lg my-3">
+                Are you sure you want to delete this book?
+              </p>
+              <div className="modal-buttons flex gap-4">
+                <button
+                  onClick={handleDelete}
+                  className="btn btn-primary p-2 w-full rounded-md"
+                  style={{ backgroundColor: "red", color: "white" }}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={handleCancelDelete}
+                  className="btn btn-primary p-2 w-full rounded-md"
+                  style={{ backgroundColor: "#9D174D", color: "white" }}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
