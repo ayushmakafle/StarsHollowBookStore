@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
+import genreRoute from "./routes/genreRoute.js";
 import cors from "cors";
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/genre", genreRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to node server of StarsHollow BookStore</h1>");

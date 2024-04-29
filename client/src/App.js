@@ -8,13 +8,15 @@ import UserRegistration from "./components/Pages/Auth/Register";
 import UserLogin from "./components/Pages/Auth/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Dashboard from "./components/Pages/User/Dashboard";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import AdminRoute from "./components/Routes/AdminRoute";
 import AdminDashboard from "./components/Pages/Admin/AdminDashboard";
 import CreateGenre from "./components/Pages/Admin/CreateGenre";
 import CreateBook from "./components/Pages/Admin/CreateBook";
 import StarsHollowUsers from "./components/Pages/Admin/StarsHollowUsers";
+import Profile from "./components/Pages/User/Profile";
+import MyOrders from "./components/Pages/User/MyOrders";
+import UserDashboard from "./components/Pages/User/UserDashboard";
 
 function App() {
   return (
@@ -27,7 +29,9 @@ function App() {
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route path="user" element={<Dashboard />} />
+          <Route path="user" element={<UserDashboard />} />
+          <Route path="user/profile" element={<Profile />} />
+          <Route path="user/order" element={<MyOrders />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
