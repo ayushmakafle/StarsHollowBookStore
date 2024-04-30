@@ -111,7 +111,7 @@ const Header = () => {
                 <FontAwesomeIcon icon={faHeart} title="Wishlist" />
               </Link>
               <Link
-                to="/wishlist"
+                to="/cart"
                 className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
               >
                 <FontAwesomeIcon icon={faCartShopping} title="Cart" />

@@ -1,0 +1,50 @@
+.rounded-container {
+  width: 100px; /* Adjust the width as needed */
+  height: 100px; /* Adjust the height as needed */
+  border-radius: 50%; /* Ensures a rounded shape */
+  overflow: hidden; /* Hides any overflow from the image */
+  border: 2px solid #ccc; /* Optional: Add a border */
+}
+
+.genre-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.genre-name {
+  width: 100px;
+  word-wrap: break-word; /* Allow the text to wrap within the container */
+  text-align: center; /* Center align text */
+}
+.genre-list {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start; /* Align items at the start of the cross axis */
+  justify-content: center; /* Center align items along the main axis */
+}
+
+.genre-container {
+  position: relative;
+  max-width: 100%; /* Ensures the container doesn't overflow the screen */
+}
+
+.navigation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0.5rem;
+}
+
+.arrow-btn {
+  width: 40px; /* Set width and height to ensure a perfect circle */
+  height: 40px; /* Set width and height to ensure a perfect circle */
+  padding: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%; /* Make the buttons rounded */
+  cursor: pointer;
+}
+
+.arrow-btn:hover {
+  background-color: #f0f0f0;
+}

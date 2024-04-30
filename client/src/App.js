@@ -19,6 +19,7 @@ import MyOrders from "./components/Pages/User/MyOrders";
 import UserDashboard from "./components/Pages/User/UserDashboard";
 import Books from "./components/Pages/Admin/Books";
 import UpdateBook from "./components/Pages/Admin/UpdateBook";
+import AllBooksPage from "./components/Pages/AllBooksPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/AllBooks" element={<AllBooksPage />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<UserDashboard />} />
           <Route path="user/profile" element={<Profile />} />
