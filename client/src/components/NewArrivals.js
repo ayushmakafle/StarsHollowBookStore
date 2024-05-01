@@ -23,12 +23,10 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        {newBooks.map((book) => (
-          <BookCard key={book._id} book={book} />
-        ))}
-      </div>
+    <div className="flex flex-wrap justify-center gap-4">
+      {newBooks.map((book) => (
+        <BookCard key={book._id} book={book} />
+      ))}
     </div>
   );
 };

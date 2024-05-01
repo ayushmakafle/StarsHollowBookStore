@@ -99,7 +99,11 @@ const LandingPage = () => {
         </button>
       </div>
 
-      <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
+      <div className="my-10 w-[60vw] mx-auto py-5 border-y border-pink-800">
+        <h4 className="londrina-color text-5xl"> New Arrivals</h4>
+        <h6 className="bona text-xl mb-8">
+          Explore Fresh Arrivals and Find Your Next Great Read
+        </h6>
         <NewArrivals />
       </div>
     </Layout>
