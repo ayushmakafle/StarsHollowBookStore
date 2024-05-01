@@ -18,6 +18,7 @@ import {
   relatedBookController,
   searchBookController,
   updateBookController,
+  bookAuthorController,
 } from "../controllers/BookController.js";
 import formidable from "express-formidable";
 import route from "color-convert/route.js";
@@ -77,6 +78,9 @@ router.get("/related-book/:pid/:cid", relatedBookController);
 
 //genre wise book
 router.get("/book-genre/:slug", bookGenreController);
+
+//genre wise book
+router.get("/book-author/:slug", bookAuthorController);
 
 // Route to update book rating
 // router.post("/rate/:bookId", requireSignIn, isDoctor, updateBookRating);

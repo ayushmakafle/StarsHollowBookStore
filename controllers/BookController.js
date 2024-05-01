@@ -336,7 +336,10 @@ export const bookGenreController = async (req, res) => {
 export const bookAuthorController = async (req, res) => {
   try {
     const author = await AuthorModel.findOne({ slug: req.params.slug });
-    const books = await bookModel.find({ author }).populate("author");
+    const books = await bookModel
+      .find({ author })
+      .populate("author")
+      .populate("genre");
     res.status(200).send({
       success: true,
       author,
