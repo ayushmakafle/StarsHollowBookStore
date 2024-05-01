@@ -85,6 +85,14 @@ const Header = () => {
                   </div>
                 )}
               </div>
+              <div className="nav-links relative ml-4">
+                <Link
+                  to={"/all-authors"}
+                  className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
+                >
+                  Authors
+                </Link>
+              </div>
             </div>
             <div className="flex items-center">
               <div className="nav-links mr-2">

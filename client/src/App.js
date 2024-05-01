@@ -24,6 +24,7 @@ import Search from "./components/Pages/Search";
 import BookDetails from "./components/Pages/BookDetails";
 import GenreBook from "./components/Pages/GenreBook";
 import CreateAuthor from "./components/Pages/Admin/CreateAuthor";
+import AllAuthors from "./components/Pages/AllAuthors";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
+        <Route path="/all-authors" element={<AllAuthors />} />
         <Route path="/search" element={<Search />} />
         <Route path="/book/:slug" element={<BookDetails />} />
         <Route path="/genre/:slug" element={<GenreBook />} />
