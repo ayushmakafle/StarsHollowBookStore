@@ -101,7 +101,7 @@ const BookDetails = () => {
             No Similar Books Found
           </h3>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <div className="flex flex-wrap gap-10 w-[70vw] mx-auto justify-center mt-4">
           {relatedBooks?.map((p) => (
             <BookCard key={p._id} book={p} />
           ))}

@@ -110,7 +110,7 @@ const AllBooksPage = () => {
   };
 
   return (
-    <Layout title={"All Books - Best offers "}>
+    <Layout>
       <div className="container mx-auto flex flex-row mt-3">
         {/* <div className="w-1/4">
           <h4 className="text-center">Filter By Genre</h4>
@@ -155,7 +155,7 @@ const AllBooksPage = () => {
           <h1 className="text-center londrina-color text-5xl py-5 ">
             All Books
           </h1>
-          <div className="flex flex-wrap gap-10 w-[70vw] mx-auto">
+          <div className="flex flex-wrap gap-10 w-[70vw] mx-auto justify-center mt-4">
             {books?.map((book) => (
               <BookCard key={book._id} book={book} />
             ))}

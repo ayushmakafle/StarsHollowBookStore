@@ -28,7 +28,7 @@ const Search = () => {
             : `Found: ${values.results.length}`}
         </h6>
 
-        <div className="flex flex-wrap mt-4">
+        <div className="flex flex-wrap gap-10 w-[70vw] mx-auto justify-center mt-4">
           {values?.results.map((book) => (
             <BookCard key={book._id} book={book} />
           ))}
