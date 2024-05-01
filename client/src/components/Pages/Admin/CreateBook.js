@@ -11,13 +11,14 @@ const CreateBook = () => {
   const [genres, setGenres] = useState([]);
   const [genre, setGenre] = useState("");
   const [authors, setAuthors] = useState([]);
-  const [authorId, setAuthorId] = useState(""); // Change to authorId to avoid conflict
+  const [authorId, setAuthorId] = useState("");
   const [photo, setPhoto] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
+  const [loading, setLoading] = useState(false); // State for loading
 
   // Fetch all genres
   const getAllGenres = async () => {
@@ -54,6 +55,7 @@ const CreateBook = () => {
   // Handle book creation
   const handleCreate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const bookData = new FormData();
       bookData.append("name", name);
@@ -62,7 +64,7 @@ const CreateBook = () => {
       bookData.append("quantity", quantity);
       bookData.append("photo", photo);
       bookData.append("genre", genre);
-      bookData.append("author", authorId); // Corrected variable name
+      bookData.append("author", authorId);
       const { data } = await axios.post("/api/v1/book/create-book", bookData);
       if (data.success) {
         toast.success("Book created successfully");
@@ -73,6 +75,8 @@ const CreateBook = () => {
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong while creating book");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -179,8 +183,9 @@ const CreateBook = () => {
                   className="btn btn-primary p-2 w-full rounded-md"
                   onClick={handleCreate}
                   style={{ backgroundColor: "#9D174D", color: "white" }}
+                  disabled={loading}
                 >
-                  Create Book
+                  {loading ? "Creating..." : "Create Book"}
                 </button>
               </div>
             </div>

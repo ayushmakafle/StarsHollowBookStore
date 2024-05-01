@@ -24,10 +24,8 @@ export const createBookController = async (req, res) => {
         return res.status(500).send({ error: "Genre is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+      case !photo:
+        return res.status(500).send({ error: "photo is Required" });
     }
 
     const books = new bookModel({ ...req.fields, slug: slugify(name) });
@@ -268,11 +266,12 @@ export const searchBookController = async (req, res) => {
     const results = await bookModel
       .find({
         $or: [
-          { name: { $regex: keyword, $options: "i" } }, //i meaning case sensitive
+          { name: { $regex: keyword, $options: "i" } },
           { description: { $regex: keyword, $options: "i" } },
         ],
       })
-      .select("-photo");
+      .select("-photo")
+      .populate("author");
     res.json(results);
   } catch (error) {
     console.log(error);
@@ -295,7 +294,8 @@ export const relatedBookController = async (req, res) => {
       })
       .select("-photo")
       .limit(3)
-      .populate("genre");
+      .populate("genre")
+      .populate("author");
     res.status(200).send({
       success: false,
       books,
@@ -314,7 +314,10 @@ export const relatedBookController = async (req, res) => {
 export const bookGenreController = async (req, res) => {
   try {
     const genre = await genreModel.findOne({ slug: req.params.slug });
-    const books = await bookModel.find({ genre }).populate("genre");
+    const books = await bookModel
+      .find({ genre })
+      .populate("genre")
+      .populate("author");
     res.status(200).send({
       success: true,
       genre,

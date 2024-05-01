@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { imageFromBuffer } from "../../../utils/utils";
 import Layout from "../../Layout/Layout";
+import LoadingSvg from "../../../assets/loadinganimation.svg";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Get all books
   const getAllBooks = async () => {
@@ -17,6 +19,8 @@ const Books = () => {
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
+    } finally {
+      setLoading(false); // Set loading state to false when fetching is done
     }
   };
 
@@ -36,46 +40,52 @@ const Books = () => {
             <h1 className="text-center text-pink-800 text-3xl my-5 font-bold">
               All Books List
             </h1>
-            <div className="flex flex-wrap justify-center">
-              {books?.map((p) => (
-                <Link
-                  key={p._id}
-                  to={`/dashboard/admin/book/${p.slug}`}
-                  className="book-link"
-                >
-                  <div className="max-w-xs mx-2 mb-4 rounded overflow-hidden shadow-lg">
-                    <img
-                      src={
-                        p.photo
-                          ? imageFromBuffer({
-                              type: p.photo.contentType,
-                              data: p.photo.data.data,
-                            })
-                          : ""
-                      } // Added conditional check
-                      className="w-full h-40 object-cover"
-                      alt={p.name}
-                    />
-                    <div className="px-6 py-4">
-                      <h5 className="text-pink-800 font-bold text-xl mb-2">
-                        {p.name}
-                      </h5>
-                      <p
-                        className="text-gray-700 text-base overflow-hidden"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 3,
-                          maxHeight: "3em",
-                        }}
-                      >
-                        {p.description}
-                      </p>
+            {loading ? ( // Show loading animation if loading is true
+              <div className="flex justify-center items-center">
+                <img src={LoadingSvg} alt="Loading" className="w-16 h-16" />
+              </div>
+            ) : (
+              <div className="flex flex-wrap justify-center">
+                {books?.map((p) => (
+                  <Link
+                    key={p._id}
+                    to={`/dashboard/admin/book/${p.slug}`}
+                    className="book-link"
+                  >
+                    <div className="max-w-xs mx-2 mb-4 rounded overflow-hidden shadow-lg">
+                      <img
+                        src={
+                          p.photo
+                            ? imageFromBuffer({
+                                type: p.photo.contentType,
+                                data: p.photo.data.data,
+                              })
+                            : ""
+                        }
+                        className="w-full h-40 object-cover"
+                        alt={p.name}
+                      />
+                      <div className="px-6 py-4">
+                        <h5 className="text-pink-800 font-bold text-xl mb-2">
+                          {p.name}
+                        </h5>
+                        <p
+                          className="text-gray-700 text-base overflow-hidden"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 3,
+                            maxHeight: "3em",
+                          }}
+                        >
+                          {p.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

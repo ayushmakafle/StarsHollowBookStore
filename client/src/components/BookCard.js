@@ -30,7 +30,7 @@ const BookCard = ({ book }) => {
           {book.name}
         </h5>
         <p className="card-text mb-2 text-lg text-pink-900 px-4">
-          {book?.author?.name}
+          {book.author.name}
         </p>
         <p className="price mb-2 font-bold text-xl px-4">$ {book.price}</p>
         <div className="buttons flex gap-3 px-4 text-lg mb-4">
