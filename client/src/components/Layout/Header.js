@@ -11,6 +11,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 import SearchInput from "../Form/SearchInput";
+import useGenre from "../../hooks/UseGenre";
 import "../../assets/stylings/Navbar.css";
 
 import LogoImg from "../../assets/images/logo.png";
@@ -19,7 +20,7 @@ import { toast } from "react-toastify";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
-  console.log("auth", auth);
+  const genres = useGenre();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -61,6 +62,7 @@ const Header = () => {
 
               <div className="nav-links relative ml-4">
                 <button
+                  //to={"/genres"}
                   onClick={toggleDropdown}
                   className="text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
                 >
@@ -69,26 +71,16 @@ const Header = () => {
                   {!isDropdownOpen && <FontAwesomeIcon icon={faAngleDown} />}
                 </button>
                 {isDropdownOpen && (
-                  <div className="absolute z-10 mt-2 w-32 shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <div className="dropdown-menu absolute z-10 mt-2 w-32 shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1">
-                      <Link
-                        to="#"
-                        className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Action
-                      </Link>
-                      <Link
-                        to="#"
-                        className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Adventure
-                      </Link>
-                      <Link
-                        to="#"
-                        className="block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Comedy
-                      </Link>
+                      {genres.map((c) => (
+                        <Link
+                          to={`/genre/${c.slug}`}
+                          className="border-b-pink-900 block px-4 py-2  md:text-lg text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          {c.name}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 )}

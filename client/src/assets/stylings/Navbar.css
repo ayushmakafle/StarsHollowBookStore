@@ -18,3 +18,27 @@ nav {
     display: none;
   }
 }
+
+.dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .border-b-pink-900 {
+    border-bottom: 2px solid #d45392; /* Change the color code to match pink-900 */
+  }
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+  height: 644px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #eee2dc;
+  border-radius: 100px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #800000;
+  border-radius: 100px;
+}

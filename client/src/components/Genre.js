@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useGenre from "../hooks/UseGenre";
 import "../assets/stylings/Genre.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -58,7 +60,7 @@ const Genre = () => {
     Travel: TravelImg,
     Crime: CrimeImg,
     Humor: HumorImg,
-    "Guide / How-to": GuideImg,
+    "Guide and How-to ": GuideImg,
     "Religion & Spirituality": SpiritualityImg,
     "Humanities & Social Sciences": PhilosophyImg,
     "Parenting & Families": ParentingImg,
@@ -67,6 +69,8 @@ const Genre = () => {
 
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const genres = useGenre();
 
   useEffect(() => {
     const handleResize = () => {
@@ -92,34 +96,36 @@ const Genre = () => {
   }, []);
 
   const handleNext = () => {
-    setStartIndex((prevIndex) =>
-      Math.min(prevIndex + itemsPerPage, Object.keys(genreImages).length - 1)
-    );
+    const maxIndex = Object.keys(genreImages).length - 1;
+    const newIndex = Math.min(startIndex + itemsPerPage, maxIndex);
+    setStartIndex(newIndex);
   };
 
   const handlePrev = () => {
-    setStartIndex((prevIndex) => Math.max(prevIndex - itemsPerPage, 0));
+    const newIndex = Math.max(startIndex - itemsPerPage, 0);
+    setStartIndex(newIndex);
   };
+  const slicedGenres = genres.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="genre-container  mx-3 w-full overflow-hidden">
+    <div className="genre-container mx-3 w-full overflow-hidden">
       <div className="genre-list flex gap-5 items-center justify-center">
-        {Object.keys(genreImages)
-          .slice(startIndex, startIndex + itemsPerPage)
-          .map((genreName, index) => (
-            <div className="genre flex flex-col" key={index}>
+        {slicedGenres.map((c) => (
+          <div className="genre flex flex-col" key={c.name}>
+            <Link to={`/genre/${c.name.toLowerCase().replace(/\s+/g, "-")}`}>
               <div className="rounded-container">
                 <img
                   className="genre-icon"
-                  src={genreImages[genreName]}
-                  alt={genreName}
+                  src={genreImages[c.name]}
+                  alt={c.name}
                 />
               </div>
-              <div className="genre-name">{genreName}</div>
-            </div>
-          ))}
+              <div className="genre-name">{c.name}</div>
+            </Link>
+          </div>
+        ))}
       </div>
-      <div className="navigation flex justify-between mt-3">
+      <div className="navigation flex justify-between">
         <button className="arrow-btn mr-2" onClick={handlePrev}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>

@@ -21,6 +21,7 @@ import Books from "./components/Pages/Admin/Books";
 import UpdateBook from "./components/Pages/Admin/UpdateBook";
 import AllBooksPage from "./components/Pages/AllBooksPage";
 import Search from "./components/Pages/Search";
+import BookDetails from "./components/Pages/BookDetails";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/book/:slug" element={<BookDetails />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<UserDashboard />} />
           <Route path="user/profile" element={<Profile />} />
