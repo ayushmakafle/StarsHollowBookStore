@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Layout from "../Layout/Layout";
+import BookCard from "../BookCard";
 
 const GenreBook = () => {
   const navigate = useNavigate();
@@ -58,33 +59,8 @@ const GenreBook = () => {
 
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-          {books?.map((p) => (
-            <div
-              className="card flex flex-col bg-white rounded-lg shadow-md"
-              style={{ width: "450px", height: "450px" }}
-            >
-              <img
-                src={`/api/v1/book/book-photo/${p._id}`}
-                className="card-img-top object-cover"
-                alt={p.name}
-                style={{ height: "200px" }}
-              />
-              <div className="card-body flex flex-col p-4">
-                <h5 className="card-title text-pink-500 font-semibold">
-                  {p.name.substring(0, 40)}
-                </h5>
-                <p className="card-text text-gray-600">
-                  {p.description.substring(0, 30)}...
-                </p>
-                <p className="card-text text-gray-600">NRs.{p.price}/-</p>
-                <button
-                  className="btn btn-primary mt-auto bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-md"
-                  onClick={() => navigate(`/book/${p.slug}`)}
-                >
-                  More Details
-                </button>
-              </div>
-            </div>
+          {books?.map((book) => (
+            <BookCard key={book._id} book={book} />
           ))}
         </div>
       </div>
