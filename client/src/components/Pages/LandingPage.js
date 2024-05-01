@@ -116,9 +116,9 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className=" genres w-[60vw] mx-auto">
+        <div className="my-10 genres w-[60vw] mx-auto py-5 border-y border-pink-800">
           <h4 className="londrina-color text-5xl"> Genres</h4>
-          <h6 className="bona text-xl">
+          <h6 className="bona text-xl mb-8">
             Browse Our Extensive Collection of Books Across Different Genres
           </h6>
           <Genre />
