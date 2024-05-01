@@ -120,7 +120,7 @@ const Genre = () => {
                   alt={c.name}
                 />
               </div>
-              <div className="genre-name">{c.name}</div>
+              <div className="bebas text-xl genre-name">{c.name}</div>
             </Link>
           </div>
         ))}

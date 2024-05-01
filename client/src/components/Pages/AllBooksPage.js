@@ -111,7 +111,7 @@ const AllBooksPage = () => {
   return (
     <Layout title={"All Books - Best offers "}>
       <div className="container mx-auto flex flex-row mt-3">
-        <div className="w-1/4">
+        {/* <div className="w-1/4">
           <h4 className="text-center">Filter By Genre</h4>
           <div className="items-center">
             {genres?.map((c) => (
@@ -124,7 +124,6 @@ const AllBooksPage = () => {
               </div>
             ))}
           </div>
-          {/* price filter */}
           <h4 className="text-center mt-4">Filter By Price</h4>
           <div className="flex flex-col">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
@@ -143,9 +142,9 @@ const AllBooksPage = () => {
               RESET FILTERS
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="w-3/4">
-          <Genre genres={genres} setSelectedGenres={setSelectedGenres} />
+          <Genre />
           <h1 className="text-center">All Books</h1>
           <div className="flex flex-wrap">
             {books?.map((p) => (

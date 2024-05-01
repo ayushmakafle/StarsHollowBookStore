@@ -1,0 +1,24 @@
+.carousel {
+  position: relative;
+
+  .carousel-navigation {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    input[type="radio"] {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+  }
+
+  &:hover .carousel-navigation {
+    opacity: 1;
+  }
+}
