@@ -144,10 +144,18 @@ const AllBooksPage = () => {
             </button>
           </div>
         </div> */}
-        <div className="w-3/4">
-          <Genre />
-          <h1 className="text-center">All Books</h1>
-          <div className="flex flex-wrap">
+        <div className="w-[60vw] mx-auto">
+          <div className="my-10 genres py-5 border-y border-pink-800">
+            <h4 className="londrina-color text-5xl"> Genres</h4>
+            <h6 className="bona text-xl mb-8">
+              Browse Our Extensive Collection of Books Across Different Genres
+            </h6>
+            <Genre />
+          </div>
+          <h1 className="text-center londrina-color text-5xl py-5 ">
+            All Books
+          </h1>
+          <div className="flex flex-wrap gap-10 w-[70vw] mx-auto">
             {books?.map((book) => (
               <BookCard key={book._id} book={book} />
             ))}
@@ -155,13 +163,13 @@ const AllBooksPage = () => {
           <div className="m-2 p-3">
             {books && books.length < total && (
               <button
-                className="bg-yellow-500 text-white py-2 px-4"
+                className="bg-pink-800 text-white py-2 px-4"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
                 }}
               >
-                {loading ? "Loading ..." : "Loadmore"}
+                {loading ? "Loading ..." : "Load More"}
               </button>
             )}
           </div>

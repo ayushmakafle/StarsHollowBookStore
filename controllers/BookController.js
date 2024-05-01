@@ -57,6 +57,7 @@ export const getBookController = async (req, res) => {
     const books = await bookModel
       .find({})
       .populate("genre")
+      .populate("author")
 
       .limit(12)
       .sort({ createdAt: -1 });
@@ -241,6 +242,7 @@ export const bookListController = async (req, res) => {
     const books = await bookModel
       .find({})
       .select("-photo")
+      .populate("author")
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: -1 });

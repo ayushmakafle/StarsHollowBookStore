@@ -4,27 +4,34 @@ import { useSearch } from "../../context/search.js";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Layout/Layout.js";
 import BookCard from "../BookCard.js";
+import Genre from "../Genre.js";
 
 const Search = () => {
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
   return (
     <Layout>
-      <div className="container">
-        <div className="text-center">
-          <h1 className="font-poppins text-pink-600 text-3xl">
-            Search Results
-          </h1>
-          <h6 className="text-de5d83 font-sans">
-            {values?.results.length < 1
-              ? "No books found"
-              : `Found:${values.results.length}`}
+      <div className="w-[60vw] mx-auto">
+        <div className="my-10 genres py-5 border-y border-pink-800">
+          <h4 className="londrina-color text-5xl"> Genres</h4>
+          <h6 className="bona text-xl mb-8">
+            Browse Our Extensive Collection of Books Across Different Genres
           </h6>
-          <div className="flex flex-wrap mt-4">
-            {values?.results.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
+          <Genre />
+        </div>
+        <h3 className="text-center londrina-color text-3xl font-semibold my-5">
+          Search Results
+        </h3>
+        <h6 className="text-center text-pink-800 font-bold text-lg">
+          {values?.results.length < 1
+            ? "No books found"
+            : `Found: ${values.results.length}`}
+        </h6>
+
+        <div className="flex flex-wrap mt-4">
+          {values?.results.map((book) => (
+            <BookCard key={book._id} book={book} />
+          ))}
         </div>
       </div>
     </Layout>
