@@ -13,6 +13,12 @@ const AdminMenu = () => {
           Create Genre
         </NavLink>
         <NavLink
+          to="/dashboard/admin/add-author"
+          className="block py-2 px-4 bg-pink-800 text-white hover:bg-pink-700 rounded-md transition duration-300"
+        >
+          Add Authors
+        </NavLink>
+        <NavLink
           to="/dashboard/admin/create-book"
           className="block py-2 px-4 bg-pink-800 text-white hover:bg-pink-700 rounded-md transition duration-300"
         >

@@ -10,6 +10,8 @@ const CreateBook = () => {
 
   const [genres, setGenres] = useState([]);
   const [genre, setGenre] = useState("");
+  const [authors, setAuthors] = useState([]);
+  const [authorId, setAuthorId] = useState(""); // Change to authorId to avoid conflict
   const [photo, setPhoto] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -30,8 +32,23 @@ const CreateBook = () => {
     }
   };
 
+  // Fetch all authors
+  const getAllAuthors = async () => {
+    // Corrected function name
+    try {
+      const { data } = await axios.get("/api/v1/author/get-author");
+      if (data.success) {
+        setAuthors(data.author); // Set authors state correctly
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while fetching authors");
+    }
+  };
+
   useEffect(() => {
     getAllGenres();
+    getAllAuthors(); // Call getAllAuthors instead of getAllAuthor
   }, []);
 
   // Handle book creation
@@ -45,6 +62,7 @@ const CreateBook = () => {
       bookData.append("quantity", quantity);
       bookData.append("photo", photo);
       bookData.append("genre", genre);
+      bookData.append("author", authorId); // Corrected variable name
       const { data } = await axios.post("/api/v1/book/create-book", bookData);
       if (data.success) {
         toast.success("Book created successfully");
@@ -77,6 +95,18 @@ const CreateBook = () => {
                 {genres.map((genre) => (
                   <option key={genre._id} value={genre._id}>
                     {genre.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="form-select mb-3 w-full rounded border border-gray-300 hover:border-pink-800 focus:border-pink-800 focus:outline-none p-2"
+                onChange={(e) => setAuthorId(e.target.value)}
+                value={authorId}
+              >
+                <option value="">Select the author</option>
+                {authors.map((author) => (
+                  <option key={author._id} value={author._id}>
+                    {author.name}
                   </option>
                 ))}
               </select>

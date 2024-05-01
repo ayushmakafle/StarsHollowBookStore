@@ -36,6 +36,11 @@ const bookSchema = Schema(
       ref: "genre",
       required: true,
     },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "author",
+      required: true,
+    },
     description: {
       type: String,
       required: true,

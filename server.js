@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
 import genreRoute from "./routes/genreRoute.js";
 import booksRoute from "./routes/booksRoute.js";
+import authorRoute from "./routes/authorRoute.js";
 import cors from "cors";
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/genre", genreRoute);
+app.use("/api/v1/author", authorRoute);
 app.use("/api/v1/book", booksRoute);
 
 app.get("/", (req, res) => {

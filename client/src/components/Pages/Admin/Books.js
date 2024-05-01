@@ -45,10 +45,14 @@ const Books = () => {
                 >
                   <div className="max-w-xs mx-2 mb-4 rounded overflow-hidden shadow-lg">
                     <img
-                      src={imageFromBuffer({
-                        type: p.photo.contentType,
-                        data: p.photo.data.data,
-                      })}
+                      src={
+                        p.photo
+                          ? imageFromBuffer({
+                              type: p.photo.contentType,
+                              data: p.photo.data.data,
+                            })
+                          : ""
+                      } // Added conditional check
                       className="w-full h-40 object-cover"
                       alt={p.name}
                     />

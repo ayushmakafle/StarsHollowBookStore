@@ -23,6 +23,7 @@ import AllBooksPage from "./components/Pages/AllBooksPage";
 import Search from "./components/Pages/Search";
 import BookDetails from "./components/Pages/BookDetails";
 import GenreBook from "./components/Pages/GenreBook";
+import CreateAuthor from "./components/Pages/Admin/CreateAuthor";
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-genre" element={<CreateGenre />} />
+          <Route path="admin/add-author" element={<CreateAuthor />} />
+
           <Route path="admin/create-book" element={<CreateBook />} />
           <Route path="admin/book/:slug" element={<UpdateBook />} />
           <Route path="admin/books" element={<Books />} />

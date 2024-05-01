@@ -1,12 +1,14 @@
 import bookModel from "../models/BookModel.js";
 import genreModel from "../models/GenreModel.js";
+import AuthorModel from "../models/AuthorModel.js";
 import fs from "fs";
 import slugify from "slugify";
 import mongoose from "mongoose";
 
 export const createBookController = async (req, res) => {
   try {
-    const { name, description, price, genre, quantity, shipping } = req.fields;
+    const { name, description, price, genre, quantity, shipping, author } =
+      req.fields;
     const { photo } = req.files;
     //validation
     switch (true) {
@@ -14,6 +16,8 @@ export const createBookController = async (req, res) => {
         return res.status(500).send({ error: "Name is Required" });
       case !description:
         return res.status(500).send({ error: "Description is Required" });
+      case !author:
+        return res.status(500).send({ error: "Author is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
       case !genre:
@@ -72,13 +76,13 @@ export const getBookController = async (req, res) => {
   }
 };
 // get single book
-// get single book
 export const getSingleBookController = async (req, res) => {
   try {
     const book = await bookModel
       .findOne({ slug: req.params.slug })
       .select("-photo")
-      .populate("genre");
+      .populate("genre")
+      .populate("author");
 
     // Fetch additional information like available quantity
     const availableQuantity = book.quantity; // Assuming available quantity is stored in the book document
@@ -141,7 +145,8 @@ export const deleteBookController = async (req, res) => {
 //update books
 export const updateBookController = async (req, res) => {
   try {
-    const { name, description, price, genre, quantity, shipping } = req.fields;
+    const { name, description, price, genre, quantity, shipping, author } =
+      req.fields;
     const { photo } = req.files;
     //validation
     switch (true) {
@@ -149,6 +154,8 @@ export const updateBookController = async (req, res) => {
         return res.status(500).send({ error: "Name is Required" });
       case !description:
         return res.status(500).send({ error: "Description is Required" });
+      case !author:
+        return res.status(500).send({ error: "author is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
       case !genre:
@@ -321,6 +328,24 @@ export const bookGenreController = async (req, res) => {
   }
 };
 
+export const bookAuthorController = async (req, res) => {
+  try {
+    const author = await AuthorModel.findOne({ slug: req.params.slug });
+    const books = await bookModel.find({ author }).populate("author");
+    res.status(200).send({
+      success: true,
+      author,
+      books,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error,
+      message: "Error while getting books",
+    });
+  }
+};
 // export const updateBookRating = async (req, res) => {
 //   try {
 //     const { bookId } = req.params;
