@@ -122,4 +122,26 @@ const testController = (req, res) => {
   res.send("protected route");
 };
 
-export default { registerController, loginController, testController };
+export const getUsersController = async (req, res) => {
+  try {
+    const users = await userModel.find({ role: 0 });
+
+    res.status(200).json({
+      success: true,
+      user: users,
+    });
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export default {
+  registerController,
+  loginController,
+  testController,
+  getUsersController,
+};
