@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Layout from "../Layout/Layout";
 import BookCard from "../BookCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const BookDetails = () => {
   const params = useParams();
@@ -44,9 +46,10 @@ const BookDetails = () => {
   return (
     <Layout>
       <button className="back-button" onClick={goBack}>
-        <span role="img" className="pink-arrow text-pink-800 m-6 ">
-          ❮❮
-        </span>
+        <FontAwesomeIcon
+          icon={faCircleLeft}
+          style={{ color: "#800000", height: "40px", margin: "4px" }}
+        />
       </button>
       <div className="container my-10 w-[70vw] mx-auto border-b border-pink-900 pb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -67,7 +70,9 @@ const BookDetails = () => {
                   {book.author && (
                     <p className="md:text-2xl text-xl bona text-pink-900 mb-5 hover:text-pink-600">
                       <span className="londrina-color">Author:</span>{" "}
-                      {book?.author?.name}
+                      <Link to={`/author/${book.author.slug}`}>
+                        {book?.author?.name}
+                      </Link>
                     </p>
                   )}
                   {book.genre && (

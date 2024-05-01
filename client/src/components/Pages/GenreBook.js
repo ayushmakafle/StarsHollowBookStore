@@ -7,6 +7,8 @@ import BookCard from "../BookCard";
 import Genre from "../Genre";
 
 import LoadingSvg from "../../assets/loadinganimation.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const GenreBook = () => {
   const navigate = useNavigate();
@@ -55,8 +57,18 @@ const GenreBook = () => {
     }
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Layout>
+      <button className="back-button" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faCircleLeft}
+          style={{ color: "#800000", height: "40px", margin: "4px" }}
+        />
+      </button>
       <div className="w-[60vw] mx-auto">
         <div className="my-10 genres py-5 border-y border-pink-800">
           <h4 className="londrina-color text-5xl"> Genres</h4>

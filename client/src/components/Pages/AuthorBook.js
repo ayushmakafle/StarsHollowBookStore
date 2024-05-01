@@ -6,6 +6,8 @@ import Layout from "../Layout/Layout";
 import BookCard from "../BookCard";
 
 import LoadingSvg from "../../assets/loadinganimation.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const AuthorBook = () => {
   const navigate = useNavigate();
@@ -55,9 +57,18 @@ const AuthorBook = () => {
       setFetching(false);
     }
   };
+  const goBack = () => {
+    navigate(-1); // Navigate back
+  };
 
   return (
     <Layout>
+      <button className="back-button" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faCircleLeft}
+          style={{ color: "#800000", height: "40px", margin: "4px" }}
+        />
+      </button>
       <div className="w-[60vw] mx-auto">
         <h3 className="text-center londrina-color text-3xl font-semibold my-5">
           Author :{" "}

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import { useAuth } from "../../../context/auth";
 import Layout from "../../Layout/Layout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -12,17 +14,11 @@ const UserDashboard = () => {
   };
   return (
     <Layout>
-      <button
-        className="hover:bg-pink-400 font-bold m-1 py-2 px-4 rounded"
-        onClick={goBack}
-      >
-        <span
-          role="img"
-          aria-label="Back Arrow"
-          className="text-pink-800 hover:text-white "
-        >
-          ❮❮
-        </span>
+      <button onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faCircleLeft}
+          style={{ color: "#800000", height: "40px", margin: "4px" }}
+        />
       </button>
       <div className="container mx-auto my-3 px-3">
         <div className="md:flex">
