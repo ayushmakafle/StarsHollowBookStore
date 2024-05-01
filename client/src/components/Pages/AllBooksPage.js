@@ -7,6 +7,7 @@ import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../Prices.js";
 import Genre from "../Genre.js";
+import { useNavigate } from "react-router-dom";
 
 const AllBooksPage = () => {
   const [books, setBooks] = useState([]);
@@ -16,6 +17,9 @@ const AllBooksPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  const navigate = useNavigate();
 
   //get all cat
   const getAllGenre = async () => {
@@ -141,7 +145,7 @@ const AllBooksPage = () => {
           </div>
         </div>
         <div className="w-3/4">
-          <Genre />
+          <Genre genres={genres} setSelectedGenres={setSelectedGenres} />
           <h1 className="text-center">All Books</h1>
           <div className="flex flex-wrap">
             {books?.map((p) => (
@@ -157,7 +161,10 @@ const AllBooksPage = () => {
                     {p.description.substring(0, 30)}...
                   </p>
                   <p className="card-text"> $ {p.price}</p>
-                  <button className="bg-blue-500 text-white px-2 py-1 ml-1">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 ml-1"
+                    onClick={() => navigate(`/book/${p.slug}`)}
+                  >
                     More Details
                   </button>
                   <button className="bg-gray-500 text-white px-2 py-1 ml-1">
