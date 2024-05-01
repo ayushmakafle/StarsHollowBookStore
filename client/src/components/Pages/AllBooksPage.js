@@ -163,7 +163,7 @@ const AllBooksPage = () => {
           <div className="m-2 p-3">
             {books && books.length < total && (
               <button
-                className="bg-pink-800 text-white py-2 px-4"
+                className="bg-pink-800 text-white py-2 px-4 rounded-md"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);

@@ -87,7 +87,7 @@ const BookDetails = () => {
                 </div>
               </div>
 
-              <p className="card-text text-black pt-3 bona md:text-xl text-lg">
+              <p className="md:pl-10 card-text text-black pt-3 bona md:text-xl text-lg">
                 {book.description}
               </p>
             </div>

@@ -6,6 +6,8 @@ import Layout from "../Layout/Layout";
 import BookCard from "../BookCard";
 import Genre from "../Genre";
 
+import LoadingSvg from "../../assets/loadinganimation.svg";
+
 const GenreBook = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -15,6 +17,7 @@ const GenreBook = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     if (params?.slug) getBooksByCat();
@@ -39,6 +42,7 @@ const GenreBook = () => {
 
   const getBooksByCat = async () => {
     try {
+      setFetching(true);
       const { data } = await axios.get(
         `/api/v1/book/book-genre/${params.slug}`
       );
@@ -46,6 +50,8 @@ const GenreBook = () => {
       setGenre(data?.genre);
     } catch (error) {
       console.log(error);
+    } finally {
+      setFetching(false);
     }
   };
 
@@ -60,7 +66,14 @@ const GenreBook = () => {
           <Genre />
         </div>
         <h3 className="text-center londrina-color text-3xl font-semibold my-5">
-          Genre : {genre?.name}
+          Genre :{" "}
+          {fetching ? (
+            <div className="flex justify-center items-center">
+              <img src={LoadingSvg} alt="Loading" className="w-16 h-16" />
+            </div>
+          ) : (
+            <span>{genre?.name}</span>
+          )}
         </h3>
         <h6 className="text-center text-pink-800 font-bold text-lg">
           {books.length === 0 || books.length === 1
@@ -69,16 +82,22 @@ const GenreBook = () => {
         </h6>
 
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-            {books?.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
+          {fetching ? (
+            <div className="flex justify-center items-center">
+              <img src={LoadingSvg} alt="Loading" className="w-16 h-16" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+              {books?.map((book) => (
+                <BookCard key={book._id} book={book} />
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex justify-center mt-5">
           {books && books.length < total && (
             <button
-              className="btn btn-primary bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-md"
+              className="md-rounded btn btn-primary bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-md"
               onClick={() => setPage(page + 1)}
             >
               {loading ? "Loading ..." : "Load More"}
