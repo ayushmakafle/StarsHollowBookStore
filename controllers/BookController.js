@@ -4,6 +4,7 @@ import AuthorModel from "../models/AuthorModel.js";
 import fs from "fs";
 import slugify from "slugify";
 import mongoose from "mongoose";
+import BookModel from "../models/BookModel.js";
 
 export const createBookController = async (req, res) => {
   try {
@@ -354,6 +355,22 @@ export const bookAuthorController = async (req, res) => {
     });
   }
 };
+
+export const getLatestBooks = async (req, res) => {
+  try {
+    // Query the database to fetch the last 4 books
+    const latestBooks = await BookModel.find()
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .populate("author");
+
+    res.json({ success: true, books: latestBooks });
+  } catch (error) {
+    console.error("Error fetching latest books:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 // export const updateBookRating = async (req, res) => {
 //   try {
 //     const { bookId } = req.params;

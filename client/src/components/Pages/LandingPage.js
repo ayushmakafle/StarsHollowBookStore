@@ -14,6 +14,7 @@ import VisitUsImg from "../../assets/images/visitus.png";
 import GenreImg from "../../assets/images/book-genres-1024x914.png";
 import BookImg from "../../assets/images/top-10-books-every-college-student-read-e1464023124869.jpeg";
 import BookShelfImg from "../../assets/images/books-bookshelf-isolated-vector.png";
+import NewArrivals from "../NewArrivals";
 
 const LandingPage = () => {
   const CarouselData = [
@@ -96,6 +97,10 @@ const LandingPage = () => {
         <button className="text-white bg-pink-800 text-xl p-5 rounded-lg font-semibold">
           <Link to={"/AllBooks"}>Browse Our Selection of Books</Link>
         </button>
+      </div>
+
+      <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
+        <NewArrivals />
       </div>
     </Layout>
   );
