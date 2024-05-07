@@ -94,7 +94,7 @@ const LandingPage = () => {
 
       <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
         <img src={BookShelfImg} />
-        <button className="text-white bg-pink-800 text-xl p-5 rounded-lg font-semibold">
+        <button className="text-white bg-pink-800 hover:bg-pink-900 text-xl p-5 rounded-lg font-semibold">
           <Link to={"/AllBooks"}>Browse Our Selection of Books</Link>
         </button>
       </div>

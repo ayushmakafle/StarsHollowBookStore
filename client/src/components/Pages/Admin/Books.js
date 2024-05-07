@@ -10,24 +10,34 @@ import LoadingSvg from "../../../assets/loadinganimation.svg";
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  // Get all books
-  const getAllBooks = async () => {
+  // Get books for the specified page
+  const getBooksForPage = async (pageNumber) => {
     try {
-      const { data } = await axios.get("/api/v1/book/get-book");
+      const { data } = await axios.get(`/api/v1/book/book-list/${page}`);
       setBooks(data.books);
+      setTotalPages(data.totalPages);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     } finally {
-      setLoading(false); // Set loading state to false when fetching is done
+      setLoading(false);
     }
   };
 
-  // Lifecycle method
   useEffect(() => {
-    getAllBooks();
-  }, []);
+    getBooksForPage(page);
+  }, [page]);
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrevPage = () => {
+    setPage(page - 1);
+  };
 
   return (
     <Layout>
@@ -40,7 +50,7 @@ const Books = () => {
             <h1 className="text-center text-pink-800 text-3xl my-5 font-bold">
               All Books List
             </h1>
-            {loading ? ( // Show loading animation if loading is true
+            {loading ? (
               <div className="flex justify-center items-center">
                 <img src={LoadingSvg} alt="Loading" className="w-16 h-16" />
               </div>
@@ -54,14 +64,7 @@ const Books = () => {
                   >
                     <div className="max-w-xs mx-2 mb-4 rounded overflow-hidden shadow-lg">
                       <img
-                        src={
-                          p.photo
-                            ? imageFromBuffer({
-                                type: p.photo.contentType,
-                                data: p.photo.data.data,
-                              })
-                            : ""
-                        }
+                        src={`/api/v1/book/book-photo/${p._id}`}
                         className="w-full h-40 object-cover"
                         alt={p.name}
                       />
@@ -86,6 +89,22 @@ const Books = () => {
                 ))}
               </div>
             )}
+            <div className="flex justify-center mt-5">
+              <button
+                onClick={handlePrevPage}
+                disabled={page === 1}
+                className="bg-pink-800 text-white py-2 px-4 rounded-md mr-2"
+              >
+                Prev
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={page === totalPages}
+                className="bg-pink-800 text-white py-2 px-4 rounded-md"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>

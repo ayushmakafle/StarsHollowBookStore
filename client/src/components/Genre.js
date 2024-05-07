@@ -111,13 +111,22 @@ const Genre = () => {
     <div className="genre-container mx-3 w-full overflow-hidden">
       <div className="genre-list flex gap-5 items-center justify-center">
         {slicedGenres.map((c) => (
-          <div className="genre flex flex-col" key={c.name}>
+          <div
+            className="genre flex flex-col  hover:text-pink-800"
+            key={c.name}
+          >
             <Link to={`/genre/${c.name.toLowerCase().replace(/\s+/g, "-")}`}>
               <div className="rounded-container">
                 <img
                   className="genre-icon"
                   src={genreImages[c.name]}
                   alt={c.name}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.filter = "brightness(1.3)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.filter = "brightness(1)")
+                  }
                 />
               </div>
               <div className="bebas text-xl genre-name">{c.name}</div>
