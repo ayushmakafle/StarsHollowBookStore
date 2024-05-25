@@ -5,7 +5,6 @@ import Footer from "./Footer";
 const Layout = ({ children }) => {
   return (
     <>
-      <Header />
       <main style={{ minHeight: "70vh" }}>{children}</main>
       <Footer />
     </>

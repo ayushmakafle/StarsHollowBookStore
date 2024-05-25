@@ -4,12 +4,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import "../assets/stylings/BookCard.css";
+import { toast } from "react-toastify";
+import { useCart } from "../context/cart";
 
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
+  const [cart, setCart] = useCart();
 
   const handleClick = () => {
     navigate(`/book/${book.slug}`);
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Prevent the card click event
+    const updatedCart = [...cart];
+    const existingProduct = updatedCart.find((item) => item._id === book._id);
+    if (existingProduct) {
+      existingProduct.numberOfItems += 1;
+    } else {
+      updatedCart.push({
+        _id: book._id,
+        name: book.name,
+        author: book.author.name,
+        price: book.price,
+        numberOfItems: 1,
+      });
+    }
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    toast.success("Item Added to cart");
   };
 
   return (
@@ -37,7 +60,10 @@ const BookCard = ({ book }) => {
           {/* <button className="bg-pink-800 text-white py-1 mb-2 rounded-xl p-4">
             More Details
           </button> */}
-          <button className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl">
+          <button
+            className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
+            onClick={handleAddToCart}
+          >
             <FontAwesomeIcon icon={faCartPlus} />
           </button>
           <button className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl">

@@ -26,11 +26,14 @@ import GenreBook from "./components/Pages/GenreBook";
 import CreateAuthor from "./components/Pages/Admin/CreateAuthor";
 import AllAuthors from "./components/Pages/AllAuthors";
 import AuthorBook from "./components/Pages/AuthorBook";
+import CartPage from "./components/Pages/CartPage";
+import Header from "./components/Layout/Header";
 
 function App() {
   return (
     <>
       <ToastContainer />
+      <Header />
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -38,6 +41,7 @@ function App() {
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/all-authors" element={<AllAuthors />} />
         <Route path="/search" element={<Search />} />
         <Route path="/book/:slug" element={<BookDetails />} />

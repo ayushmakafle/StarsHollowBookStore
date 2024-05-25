@@ -2,6 +2,7 @@ nav {
   background-color: #eee2dc;
   box-shadow: 0 8px 6px -6px gainsboro;
   width: 100%;
+  position: sticky;
 }
 
 .desktop-nav {

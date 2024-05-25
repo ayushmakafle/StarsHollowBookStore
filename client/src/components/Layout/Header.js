@@ -9,6 +9,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
+import { Badge, Avatar } from "antd";
 
 import SearchInput from "../Form/SearchInput";
 import useGenre from "../../hooks/UseGenre";
@@ -17,9 +18,11 @@ import "../../assets/stylings/Navbar.css";
 import LogoImg from "../../assets/images/logo.png";
 import { useAuth } from "../../context/auth";
 import { toast } from "react-toastify";
+import { useCart } from "../../context/cart";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
   const genres = useGenre();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -110,12 +113,14 @@ const Header = () => {
               >
                 <FontAwesomeIcon icon={faHeart} title="Wishlist" />
               </Link>
-              <Link
-                to="/cart"
-                className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
-              >
-                <FontAwesomeIcon icon={faCartShopping} title="Cart" />
-              </Link>
+              <Badge count={cart?.length} color="rgb(157 23 77">
+                <Link
+                  to="/cart"
+                  className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2  md:text-lg text-sm font-medium"
+                >
+                  <FontAwesomeIcon icon={faCartShopping} title="Cart" />
+                </Link>
+              </Badge>
 
               {!auth.user ? (
                 <Link
