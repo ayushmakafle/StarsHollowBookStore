@@ -361,7 +361,7 @@ export const getLatestBooks = async (req, res) => {
     // Query the database to fetch the last 4 books
     const latestBooks = await BookModel.find()
       .sort({ createdAt: -1 })
-      .limit(4)
+      .limit(6)
       .populate("author");
 
     res.json({ success: true, books: latestBooks });

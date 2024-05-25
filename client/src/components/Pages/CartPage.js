@@ -87,7 +87,7 @@ const CartPage = () => {
           <div className="w-full lg:w-3/5">
             <div className="flex justify-between items-end mb-6">
               <h2 className="londrina-color text-3xl mb-2">Book Bag </h2>
-              <h4 className="text-xl text-pink-700 mb-4">
+              <h4 className="bona md:text-xl text-sm text-pink-700 mb-4">
                 {cart?.length ? (
                   <>
                     You have{" "}
@@ -106,33 +106,35 @@ const CartPage = () => {
                   className="flex justify-between border-b border-pink-800 py-2"
                 >
                   <div className="flex">
-                    <div className="py-4 px-4">
+                    <div className="py-4 md:px-4 px-1">
                       <img
                         src={`/api/v1/book/book-photo/${p._id}`}
                         alt={p.name}
-                        className="w-[130px] h-full rounded-md shadow-lg"
+                        className="md:w-[130px] w-[100px] h-full rounded-md shadow-lg"
                       />
                     </div>
-                    <div className="flex flex-col justify-between py-4 px-4">
+                    <div className="flex flex-col justify-between py-4 md:px-4 px-2">
                       <div className="flex flex-col">
-                        <span className="font-bold text-2xl">{p.name}</span>
-                        <span className="text-gray-600 text-xl">
+                        <span className="font-bold md:text-2xl text-lg">
+                          {p.name}
+                        </span>
+                        <span className="text-gray-600 md:text-xl text-base">
                           {p.author}
                         </span>
                       </div>
                       <div className="flex items-center">
-                        <div className="border border-gray-300 rounded-md shadow-lg text-2xl">
+                        <div className="border border-gray-300 rounded-md shadow-lg md:text-2xl text-xl">
                           <button
-                            className="px-2 py-1"
+                            className="md:px-2 px-1 md:py-1 py-0"
                             onClick={() => updateQuantity(p._id, "decrement")}
                           >
                             -
                           </button>
-                          <span className="mx-4 text-xl font-semibold">
+                          <span className="md:mx-4 mx-2 md:text-xl text-lg font-semibold">
                             {p.numberOfItems}
                           </span>
                           <button
-                            className="px-2 py-1"
+                            className="md:px-2 px-1 md:py-1 py-0"
                             onClick={() => updateQuantity(p._id, "increment")}
                           >
                             +
@@ -143,22 +145,22 @@ const CartPage = () => {
                   </div>
 
                   <div className="flex flex-col justify-between items-end my-4">
-                    <div className="text-2xl font-bold">
-                      $ {p.price.toFixed(2)} /-
+                    <div className="md:text-2xl text-lg font-bold">
+                      $ {p.price.toFixed(2)}
                     </div>
-                    <div>
+                    <div className="flex xl:flex-row flex-col gap-2 items-end">
                       <button
-                        className="text-pink-800 hover:text-pink-900 font-semibold mx-2"
+                        className="text-pink-800 hover:text-pink-900 font-semibold flex gap-1 items-center md:text-sm text-xs "
                         onClick={() => removeCartItem(p._id)}
                       >
-                        <FontAwesomeIcon icon={faTrash} className="mx-2" />
+                        <FontAwesomeIcon icon={faTrash} className="" />
                         Remove
                       </button>
                       <button
-                        className="text-pink-800 hover:text-pink-900 font-semibold mx-2"
+                        className="text-pink-800 hover:text-pink-900 font-semibold flex gap-1 items-center md:text-sm text-xs"
                         onClick={() => removeCartItem(p._id)}
                       >
-                        <FontAwesomeIcon icon={faHeart} className="mx-2" />
+                        <FontAwesomeIcon icon={faHeart} className="" />
                         Add to Wishlist
                       </button>
                     </div>
@@ -167,16 +169,16 @@ const CartPage = () => {
               ))}
             </div>
           </div>
-          <div className="w-full lg:w-1/4 lg:pl-4">
+          <div className="w-full lg:w-1/4 lg:pl-4 mt-4 lg:mt-0">
             <div className="bg-white p-4 rounded-lg shadow-lg">
               <div className="border-b border-pink-800 py-4">
-                <h2 className="text-2xl font-semibold text-pink-800 mb-4">
+                <h2 className="londrina-color text-2xl font-semibold mb-4">
                   Order Summary
                 </h2>
                 <h4 className="flex justify-between text-xl mb-2">
                   <span className="text-gray-600 text-lg">Subtotal</span>
                   <span className="font-bold text-pink-900">
-                    {totalPrice()} /-
+                    {totalPrice()}
                   </span>
                 </h4>
               </div>

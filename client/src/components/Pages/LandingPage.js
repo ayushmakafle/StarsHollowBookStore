@@ -84,8 +84,8 @@ const LandingPage = () => {
         </div>
 
         <div className="mt-10 genres w-[60vw] mx-auto py-5 border-y border-pink-800">
-          <h4 className="londrina-color text-5xl"> Genres</h4>
-          <h6 className="bona text-xl mb-8">
+          <h4 className="londrina-color md:text-5xl text-2xl"> Genres</h4>
+          <h6 className="bona md:text-xl text-base mb-8">
             Browse Our Extensive Collection of Books Across Different Genres
           </h6>
           <Genre />
@@ -94,14 +94,14 @@ const LandingPage = () => {
 
       <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
         <img src={BookShelfImg} />
-        <button className="text-white bg-pink-800 hover:bg-pink-900 text-xl p-5 rounded-lg font-semibold">
+        <button className="text-white bg-pink-800 hover:bg-pink-900 md:text-xl text-lg md:p-5 p-1 rounded-lg font-semibold">
           <Link to={"/AllBooks"}>Browse Our Selection of Books</Link>
         </button>
       </div>
 
       <div className="my-10 w-[60vw] mx-auto py-5 border-y border-pink-800">
-        <h4 className="londrina-color text-5xl"> New Arrivals</h4>
-        <h6 className="bona text-xl mb-8">
+        <h4 className="londrina-color md:text-5xl text-2xl"> New Arrivals</h4>
+        <h6 className="bona md:text-xl text-base mb-8">
           Explore Fresh Arrivals and Find Your Next Great Read
         </h6>
         <NewArrivals />
