@@ -83,25 +83,27 @@ const CartPage = () => {
         />
       </button>
       <div className="container mx-auto p-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold text-pink-800 mb-2">
-            {`Hello ${auth?.token && auth?.user?.username}!`}
-          </h2>
-          <h4 className="text-xl text-pink-700 mb-4">
-            {cart?.length
-              ? `You Have ${cart.length} items in your cart ${
-                  auth?.token ? "" : "please login to checkout"
-                }`
-              : " Your Cart Is Empty"}
-          </h4>
-        </div>
         <div className="flex flex-col lg:flex-row justify-around">
           <div className="w-full lg:w-3/5">
+            <div className="flex justify-between items-end mb-6">
+              <h2 className="londrina-color text-3xl mb-2">Book Bag </h2>
+              <h4 className="text-xl text-pink-700 mb-4">
+                {cart?.length ? (
+                  <>
+                    You have{" "}
+                    <span className="font-bold">{cart.length}&nbsp;books</span>{" "}
+                    in your bag {auth?.token ? "" : "Please login to checkout"}
+                  </>
+                ) : (
+                  " Your Cart is Empty"
+                )}
+              </h4>
+            </div>
             <div>
               {cart?.map((p) => (
                 <div
                   key={p._id}
-                  className="flex justify-between border-b border-pink-800"
+                  className="flex justify-between border-b border-pink-800 py-2"
                 >
                   <div className="flex">
                     <div className="py-4 px-4">
@@ -166,7 +168,7 @@ const CartPage = () => {
             </div>
           </div>
           <div className="w-full lg:w-1/4 lg:pl-4">
-            <div className="bg-white p-4 rounded-lg shadow-md">
+            <div className="bg-white p-4 rounded-lg shadow-lg">
               <div className="border-b border-pink-800 py-4">
                 <h2 className="text-2xl font-semibold text-pink-800 mb-4">
                   Order Summary
