@@ -21,4 +21,6 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
 //get users
 router.get("/get-user", AuthController.getUsersController);
 
+router.put("/profile", requireSignIn, AuthController.updateProfileController);
+
 export default router;
