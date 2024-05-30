@@ -17,6 +17,7 @@
     "antd": "^5.16.4",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "braintree": "^3.23.0",
     "colors": "^1.4.0",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",

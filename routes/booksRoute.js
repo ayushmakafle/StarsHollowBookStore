@@ -20,6 +20,8 @@ import {
   updateBookController,
   bookAuthorController,
   getLatestBooks,
+  braintreeTokenController,
+  brainTreePaymentController,
 } from "../controllers/BookController.js";
 import formidable from "express-formidable";
 import route from "color-convert/route.js";
@@ -92,5 +94,12 @@ router.post("/getQuantities", getBookQuantities);
 
 //update quantity when users buys
 router.put("/updateStock", bookStockUpdate);
+
+//payments routes
+//token
+router.get("/braintree/token", braintreeTokenController);
+
+//payments
+router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 
 export default router;
