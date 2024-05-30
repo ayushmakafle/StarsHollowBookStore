@@ -28,38 +28,41 @@ const MyOrders = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-3">
-        <div className="grid grid-cols-12 gap-4">
+      <div className="container mx-auto  mt-10">
+        <div className="flex md:flex-row flex-col gap-20">
           <div className="col-span-12 md:col-span-3">
             <UserMenu />
           </div>
-          <div className="md:ml-10 mt-10 col-span-12 md:col-span-9">
-            <h1 className="londrina-color text-pink-800 text-3xl mb-5">
-              My Orders
-            </h1>
+          <div className="md:w-3/5 w-full">
+            <h4 className="londrina-color mb-4 text-3xl">My orders</h4>
 
             {orders?.map((o, i) => {
               return (
-                <div className="border shadow rounded-lg mb-6 w-2/3 " key={i}>
-                  <table className="w-full">
+                <div
+                  className="border shadow rounded-lg mb-6 max-w-screen-sm "
+                  key={i}
+                >
+                  <table className="w-full ">
                     <thead>
                       <tr className="bg-pink-900 text-white">
-                        <th className="p-2">SNo.</th>
-                        <th className="p-2">Status</th>
-                        <th className="p-2">Date</th>
-                        <th className="p-2">Payment</th>
-                        <th className="p-2">Quantity</th>
+                        <th className="hidden sm:block sm:p-2 p-1">SNo.</th>
+                        <th className="sm:p-2 p-1">Status</th>
+                        <th className="sm:p-2 p-1">Date</th>
+                        <th className="sm:p-2 p-1">Payment</th>
+                        <th className="sm:p-2 p-1">Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="text-center">
-                        <td className="p-2">{i + 1}</td>
-                        <td className="p-2">{o?.status}</td>
-                        <td className="p-2">{formatDate(o?.createdAt)}</td>
-                        <td className="p-2">
+                        <td className="hidden sm:block sm:p-2 p-1">{i + 1}</td>
+                        <td className="sm:p-2 p-1">{o?.status}</td>
+                        <td className="sm:p-2 p-1">
+                          {formatDate(o?.createdAt)}
+                        </td>
+                        <td className="sm:p-2 p-1">
                           {o?.payment.success ? "Success" : "Failed"}
                         </td>
-                        <td className="p-2">{o?.products?.length}</td>
+                        <td className="sm:p-2 p-1">{o?.products?.length}</td>
                       </tr>
                     </tbody>
                   </table>
