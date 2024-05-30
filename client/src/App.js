@@ -28,6 +28,7 @@ import AllAuthors from "./components/Pages/AllAuthors";
 import AuthorBook from "./components/Pages/AuthorBook";
 import CartPage from "./components/Pages/CartPage";
 import Header from "./components/Layout/Header";
+import AdminOrders from "./components/Pages/Admin/AdminOrders";
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<UserDashboard />} />
           <Route path="user/profile" element={<Profile />} />
-          <Route path="user/order" element={<MyOrders />} />
+          <Route path="user/orders" element={<MyOrders />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
@@ -61,6 +62,7 @@ function App() {
           <Route path="admin/book/:slug" element={<UpdateBook />} />
           <Route path="admin/books" element={<Books />} />
           <Route path="admin/users" element={<StarsHollowUsers />} />
+          <Route path="admin/order" element={<AdminOrders />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

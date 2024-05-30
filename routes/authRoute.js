@@ -23,4 +23,14 @@ router.get("/get-user", AuthController.getUsersController);
 
 router.put("/profile", requireSignIn, AuthController.updateProfileController);
 
+router.get("/orders", requireSignIn, AuthController.getOrdersController);
+
+router.get("/all-orders", AuthController.getAllOrdersController);
+
+router.put(
+  "/order-status/:orderId",
+  requireSignIn,
+  AuthController.orderStatusController
+);
+
 export default router;

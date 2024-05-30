@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
-import UserMenu from "./UserMenu";
-import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
+import AdminMenu from "./AdminMenu";
+import Layout from "../../../components/Layout/Layout";
 import { useAuth } from "../../../context/auth";
+import { Select } from "antd";
 
-const MyOrders = () => {
+const { Option } = Select;
+
+const AdminOrders = () => {
+  const [status, setStatus] = useState([
+    "Not Process",
+    "Processing",
+    "Shipped",
+    "delivered",
+    "cancel",
+  ]);
+  const [changeStatus, setCHangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/orders");
+      const { data } = await axios.get("/api/v1/auth/all-orders");
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -21,12 +32,23 @@ const MyOrders = () => {
     if (auth?.token) getOrders();
   }, [auth?.token]);
 
+  const handleChange = async (orderId, value) => {
+    try {
+      const { data } = await axios.put(`/api/v1/auth/order-status/${orderId}`, {
+        status: value,
+      });
+      getOrders();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Layout title={"Your Orders"}>
-      <div className="container mx-auto p-3 m-3 dashboard">
+    <Layout title={"All Orders Data"}>
+      <div className="container mx-auto p-3">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <UserMenu />
+            <AdminMenu />
           </div>
           <div className="w-full md:w-3/4">
             <h1 className="text-center text-2xl font-bold mb-6">All Orders</h1>
@@ -47,8 +69,21 @@ const MyOrders = () => {
                     <tbody>
                       <tr className="text-center">
                         <td className="p-2">{i + 1}</td>
-                        <td className="p-2">{o?.status}</td>
-                        <td className="p-2">{o?.buyer?.username}</td>
+                        <td className="p-2">
+                          <Select
+                            bordered={false}
+                            onChange={(value) => handleChange(o._id, value)}
+                            defaultValue={o?.status}
+                            className="w-full"
+                          >
+                            {status.map((s, i) => (
+                              <Option key={i} value={s}>
+                                {s}
+                              </Option>
+                            ))}
+                          </Select>
+                        </td>
+                        <td className="p-2">{o?.buyer?.name}</td>
                         <td className="p-2">
                           {new Date(o?.createAt).toLocaleString()}
                         </td>
@@ -90,4 +125,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default AdminOrders;
