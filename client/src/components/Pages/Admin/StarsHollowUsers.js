@@ -59,11 +59,13 @@ const StarsHollowUsers = () => {
           <div className="w-full md:w-1/4">
             <AdminMenu />
           </div>
-          <div className="md:ml-10 mt-10 col-span-12 md:col-span-9">
+          <div className="w-full md:w-3/4 mt-10">
             <h1 className="text-pink-800 text-3xl mb-5">
               All Stars Hollow Users
             </h1>
-            <Table dataSource={users} columns={columns} />
+            <div className="overflow-x-auto">
+              <Table dataSource={users} columns={columns} pagination={false} />
+            </div>
           </div>
         </div>
       </div>
