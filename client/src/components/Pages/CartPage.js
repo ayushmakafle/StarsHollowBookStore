@@ -23,6 +23,7 @@ const CartPage = () => {
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkout, setCheckout] = useState(false);
   const navigate = useNavigate();
 
   const totalPrice = () => {
@@ -133,7 +134,7 @@ const CartPage = () => {
                     in your bag {auth?.token ? "" : "Please login to checkout"}
                   </>
                 ) : (
-                  " Your Cart is Empty"
+                  " Your bag is empty"
                 )}
               </h4>
             </div>
@@ -251,7 +252,7 @@ const CartPage = () => {
                   </button>
                   <button
                     className="bg-pink-900 text-white px-4 py-2 rounded mt-2"
-                    onClick={() => navigate("/checkout")}
+                    onClick={() => setCheckout(true)}
                   >
                     Checkout
                   </button>
@@ -267,7 +268,7 @@ const CartPage = () => {
                     </button>
                   ) : (
                     <button
-                      className="bg-pink-700 text-white px-4 py-2 rounded mt-2"
+                      className="bg-pink-800 text-white px-4 py-2 rounded mt-2"
                       onClick={() =>
                         navigate("/login", {
                           state: "/cart",
@@ -279,32 +280,33 @@ const CartPage = () => {
                   )}
                 </div>
               )}
-            </div>
-          </div>
-          <div className="mt-2">
-            {!clientToken || !cart?.length ? (
-              ""
-            ) : (
-              <>
-                <DropIn
-                  options={{
-                    authorization: clientToken,
-                    paypal: {
-                      flow: "vault",
-                    },
-                  }}
-                  onInstance={(instance) => setInstance(instance)}
-                />
+              <div className="mt-2">
+                {checkout &&
+                  (!clientToken || !cart?.length ? (
+                    ""
+                  ) : (
+                    <>
+                      <DropIn
+                        options={{
+                          authorization: clientToken,
+                          paypal: {
+                            flow: "vault",
+                          },
+                        }}
+                        onInstance={(instance) => setInstance(instance)}
+                      />
 
-                <button
-                  className="btn btn-primary"
-                  onClick={handlePayment}
-                  disabled={loading || !instance || !auth?.user?.address}
-                >
-                  {loading ? "Processing ...." : "Make Payment"}
-                </button>
-              </>
-            )}
+                      <button
+                        className="bg-pink-800 text-white px-4 py-2 rounded mt-2"
+                        onClick={handlePayment}
+                        disabled={loading || !instance || !auth?.user?.address}
+                      >
+                        {loading ? "Processing..." : "Make Payment"}
+                      </button>
+                    </>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
