@@ -29,6 +29,7 @@ import AuthorBook from "./components/Pages/AuthorBook";
 import CartPage from "./components/Pages/CartPage";
 import Header from "./components/Layout/Header";
 import AdminOrders from "./components/Pages/Admin/AdminOrders";
+import Wishlist from "./components/Pages/Wishlist";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/all-authors" element={<AllAuthors />} />
         <Route path="/search" element={<Search />} />
         <Route path="/book/:slug" element={<BookDetails />} />

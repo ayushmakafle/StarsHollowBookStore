@@ -6,17 +6,19 @@ import { faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 import "../assets/stylings/BookCard.css";
 import { toast } from "react-toastify";
 import { useCart } from "../context/cart";
+import { useWishlist } from "../context/wishlist";
 
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
+  const [wishlist, setWishlist] = useWishlist();
 
   const handleClick = () => {
     navigate(`/book/${book.slug}`);
   };
 
   const handleAddToCart = (e) => {
-    e.stopPropagation(); // Prevent the card click event
+    e.stopPropagation();
     const updatedCart = [...cart];
     const existingProduct = updatedCart.find((item) => item._id === book._id);
     if (existingProduct) {
@@ -32,7 +34,29 @@ const BookCard = ({ book }) => {
     }
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    toast.success("Item Added to cart");
+    toast.success("Book added to cart");
+  };
+
+  const handleAddToWishlist = (e) => {
+    e.stopPropagation();
+    const updatedWishlist = [...wishlist];
+    const existingProduct = updatedWishlist.find(
+      (item) => item._id === book._id
+    );
+    if (existingProduct) {
+      existingProduct.numberOfItems += 1;
+    } else {
+      updatedWishlist.push({
+        _id: book._id,
+        name: book.name,
+        author: book.author.name,
+        price: book.price,
+        numberOfItems: 1,
+      });
+    }
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    toast.success("Book added to wishlist");
   };
 
   return (
@@ -66,7 +90,10 @@ const BookCard = ({ book }) => {
           >
             <FontAwesomeIcon icon={faCartPlus} />
           </button>
-          <button className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl">
+          <button
+            className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
+            onClick={handleAddToWishlist}
+          >
             <FontAwesomeIcon icon={faHeart} />
           </button>
         </div>
