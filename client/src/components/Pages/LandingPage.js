@@ -37,7 +37,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <Layout>
+    <Layout className="container mx-auto">
       <div className="landing-page">
         <div id="hero-section" className="hero-section items-center">
           <div className="content-container flex gap-8 lg:flex-row flex-column items-center mt-0">
