@@ -15,6 +15,7 @@ import GenreImg from "../../assets/images/book-genres-1024x914.png";
 import BookImg from "../../assets/images/top-10-books-every-college-student-read-e1464023124869.jpeg";
 import BookShelfImg from "../../assets/images/books-bookshelf-isolated-vector.png";
 import NewArrivals from "../NewArrivals";
+import FaqSection from "./FaqSection";
 
 const LandingPage = () => {
   const CarouselData = [
@@ -106,6 +107,7 @@ const LandingPage = () => {
         </h6>
         <NewArrivals />
       </div>
+      <FaqSection />
     </Layout>
   );
 };
