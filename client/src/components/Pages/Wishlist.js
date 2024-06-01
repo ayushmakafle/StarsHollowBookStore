@@ -9,7 +9,9 @@ import {
   faCircleLeft,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import BookShelfImg from "../../assets/images/books-bookshelf-isolated-vector.png";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useWishlist();
@@ -56,7 +58,17 @@ const Wishlist = () => {
       </button>
       <div className="container mx-auto p-4">
         {wishlist.length === 0 ? (
-          <p className="text-center text-pink-900">Your wishlist is empty.</p>
+          <>
+            <p className="londrina-color text-center text-3xl">
+              Your wishlist is empty.
+            </p>
+            <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
+              <img src={BookShelfImg} />
+              <button className="text-white bg-pink-800 hover:bg-pink-900 md:text-xl text-lg md:p-5 p-1 rounded-lg font-semibold">
+                <Link to={"/AllBooks"}>Browse Our Selection of Books</Link>
+              </button>
+            </div>
+          </>
         ) : (
           <div className="w-[80vw] mx-auto">
             <div className="flex justify-between items-end mb-6">

@@ -4,6 +4,7 @@ import AdminMenu from "./AdminMenu";
 import Layout from "../../../components/Layout/Layout";
 import { useAuth } from "../../../context/auth";
 import { Select } from "antd";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -87,7 +88,11 @@ const AdminOrders = () => {
                               ))}
                             </Select>
                           </td>
-                          <td className="sm:p-2 p-1">{o?.buyer?.username}</td>
+                          <td className="sm:p-2 p-1">
+                            <Link to={`admin/users/${o?.buyer}`}>
+                              {o?.buyer?.username}
+                            </Link>
+                          </td>
                           <td className="sm:p-2 p-1">
                             {formatDate(o?.createdAt)}
                           </td>

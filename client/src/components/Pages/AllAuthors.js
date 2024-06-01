@@ -39,23 +39,24 @@ const AllAuthors = () => {
         />
       </button>
       <div className="w-[60vw] mx-auto">
-        <div className="my-10 genres py-5 border-y border-pink-800">
+        <div className="my-10 genres py-5">
           <h4 className="londrina-color text-5xl mb-4"> All Authors</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {authors.map((author, index) => (
-              <div key={author._id} className="flex flex-col items-center">
-                <img
-                  src={shuffledImages[index % shuffledImages.length]}
-                  alt="Author"
-                  className="w-32 h-32 rounded-full mb-2"
-                />
-                <Link
-                  to={`/author/${author.slug}`}
-                  className="text-xl font-bold text-pink-800 hover:text-pink-600"
-                >
+              <Link
+                to={`/author/${author.slug}`}
+                className="text-xl font-bold text-pink-800 hover:text-pink-600"
+              >
+                <div key={author._id} className="flex flex-col items-center">
+                  <img
+                    src={shuffledImages[index % shuffledImages.length]}
+                    alt="Author"
+                    className="w-32 h-32 rounded-full mb-2"
+                  />
+
                   {author.name}
-                </Link>
-              </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

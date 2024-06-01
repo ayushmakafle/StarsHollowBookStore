@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Layout from "../Layout/Layout";
 import { useAuth } from "../../context/auth";
@@ -14,6 +14,9 @@ import {
 import { Checkbox } from "antd";
 import { toast } from "react-toastify";
 import DropIn from "braintree-web-drop-in-react";
+import { useWishlist } from "../../context/wishlist";
+
+import BookShelfImg from "../../assets/images/books-bookshelf-isolated-vector.png";
 
 const CartPage = () => {
   const [auth] = useAuth();
@@ -24,6 +27,8 @@ const CartPage = () => {
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkout, setCheckout] = useState(false);
+  const [wishlist, setWishlist] = useWishlist();
+
   const navigate = useNavigate();
 
   const totalPrice = () => {
@@ -113,6 +118,25 @@ const CartPage = () => {
     }
   };
 
+  const handleAddToWishlist = (p) => {
+    const updatedWishlist = [...wishlist];
+    const existingProduct = updatedWishlist.find((item) => item._id === p._id);
+    if (existingProduct) {
+      existingProduct.numberOfItems += 1;
+    } else {
+      updatedWishlist.push({
+        _id: p._id,
+        name: p.name,
+        author: p.author.name,
+        price: p.price,
+        numberOfItems: 1,
+      });
+    }
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    toast.success("Book added to wishlist");
+  };
+
   return (
     <Layout>
       <button className="m-4" onClick={goBack}>
@@ -125,16 +149,30 @@ const CartPage = () => {
         <div className="flex flex-col lg:flex-row justify-around">
           <div className="w-full lg:w-3/5">
             <div className="flex justify-between items-end mb-6">
-              <h2 className="londrina-color text-3xl mb-2">Book Bag </h2>
               <h4 className="bona md:text-xl text-sm text-pink-700 mb-4">
                 {cart?.length ? (
                   <>
+                    <h2 className="londrina-color text-3xl mb-2">Book Bag </h2>
                     You have{" "}
-                    <span className="font-bold">{cart.length}&nbsp;books</span>{" "}
+                    <span className="font-bold">
+                      {cart.length}&nbsp;books
+                    </span>{" "}
                     in your bag {auth?.token ? "" : "Please login to checkout"}
                   </>
                 ) : (
-                  " Your bag is empty"
+                  <>
+                    <p className="londrina-color text-center text-3xl">
+                      Your cart is empty.
+                    </p>
+                    <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center">
+                      <img src={BookShelfImg} />
+                      <button className="text-white bg-pink-800 hover:bg-pink-900 md:text-xl text-lg md:p-5 p-1 rounded-lg font-semibold">
+                        <Link to={"/AllBooks"}>
+                          Browse Our Selection of Books
+                        </Link>
+                      </button>
+                    </div>
+                  </>
                 )}
               </h4>
             </div>
@@ -197,7 +235,7 @@ const CartPage = () => {
                       </button>
                       <button
                         className="text-pink-800 hover:text-pink-900 font-semibold flex gap-1 items-center md:text-sm text-xs"
-                        onClick={() => removeCartItem(p._id)}
+                        onClick={() => handleAddToWishlist(p)}
                       >
                         <FontAwesomeIcon icon={faHeart} className="" />
                         Add to Wishlist
