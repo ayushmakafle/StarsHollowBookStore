@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DownArrow from "../../assets/images/dropdown-icon.png";
 import UpArrow from "../../assets/images/dropdown-selected.png";
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FaqSection = () => {
   const [selected, setSelected] = useState(null);
@@ -92,11 +94,11 @@ const FaqSection = () => {
               >
                 {item.question}
               </div>
-              <img
-                src={selected === index ? UpArrow : DownArrow}
-                alt="Dropdown Icon"
-                className="w-4"
-              />
+              {selected === index ? (
+                <FontAwesomeIcon icon={faAngleUp} className="text-pink-800" />
+              ) : (
+                <FontAwesomeIcon icon={faAngleDown} className="text-pink-800" />
+              )}
             </div>
             <div
               className={`overflow-hidden transition-all duration-500 ${
