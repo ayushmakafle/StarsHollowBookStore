@@ -53,7 +53,7 @@ const Wishlist = () => {
       <button className="m-4" onClick={goBack}>
         <FontAwesomeIcon
           icon={faCircleLeft}
-          className="text-pink-700 text-2xl"
+          style={{ color: "#800000", height: "40px", margin: "4px" }}
         />
       </button>
       <div className="container mx-auto p-4">

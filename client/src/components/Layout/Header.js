@@ -182,6 +182,7 @@ const Header = () => {
               <div className="nav-links mr-2">
                 <SearchInput />
               </div>
+
               <button
                 onClick={toggleMobileMenu}
                 className="mr-2 text-pink-800 hover:border-b border-pink-800 hover:text-pink-950 px-3 py-2 md:text-lg text-sm font-medium"
@@ -198,6 +199,12 @@ const Header = () => {
                   className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
                 >
                   About Us
+                </Link>
+                <Link
+                  to="/cart"
+                  className="block text-pink-800 hover:text-pink-950 py-2 md:text-lg text-sm font-medium"
+                >
+                  <FontAwesomeIcon icon={faCartShopping} title="Cart" /> Cart
                 </Link>
                 <Link
                   to="/wishlist"
