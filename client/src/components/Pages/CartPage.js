@@ -29,8 +29,8 @@ const CartPage = () => {
   const totalPrice = () => {
     try {
       let total = 0;
-      cart?.map((item) => {
-        total += item.price * item.numberOfItems;
+      cart?.forEach((item) => {
+        total += (item.price ?? 0) * item.numberOfItems;
       });
 
       if (isGiftWrap) {
@@ -185,11 +185,11 @@ const CartPage = () => {
 
                   <div className="flex flex-col justify-between items-end my-4">
                     <div className="md:text-2xl text-lg font-bold">
-                      $ {p.price.toFixed(2)}
+                      ${(p.price ?? 0).toFixed(2)}
                     </div>
                     <div className="flex xl:flex-row flex-col gap-2 items-end">
                       <button
-                        className="text-pink-800 hover:text-pink-900 font-semibold flex gap-1 items-center md:text-sm text-xs "
+                        className="text-pink-800 hover:text-pink-900 font-semibold flex gap-1 items-center md:text-sm text-xs"
                         onClick={() => removeCartItem(p._id)}
                       >
                         <FontAwesomeIcon icon={faTrash} className="" />
@@ -269,11 +269,7 @@ const CartPage = () => {
                   ) : (
                     <button
                       className="bg-pink-800 text-white px-4 py-2 rounded mt-2"
-                      onClick={() =>
-                        navigate("/login", {
-                          state: "/cart",
-                        })
-                      }
+                      onClick={() => navigate("/login", { state: "/cart" })}
                     >
                       Please Login to Checkout
                     </button>
