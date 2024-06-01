@@ -57,7 +57,9 @@ const AdminOrders = () => {
             <AdminMenu />
           </div>
           <div className="w-full md:w-3/4">
-            <h1 className="text-center text-2xl font-bold mb-6">All Orders</h1>
+            <h1 className="londrina-color text-center text-2xl font-bold mb-6">
+              All Orders
+            </h1>
             <div className="overflow-x-auto">
               {orders?.map((o, i) => {
                 return (

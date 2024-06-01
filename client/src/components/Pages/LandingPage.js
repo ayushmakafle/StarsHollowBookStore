@@ -16,6 +16,7 @@ import BookImg from "../../assets/images/top-10-books-every-college-student-read
 import BookShelfImg from "../../assets/images/books-bookshelf-isolated-vector.png";
 import NewArrivals from "../NewArrivals";
 import FaqSection from "./FaqSection";
+import Feature from "../FeatureSection";
 
 const LandingPage = () => {
   const CarouselData = [
@@ -99,8 +100,11 @@ const LandingPage = () => {
           <Link to={"/AllBooks"}>Browse Our Selection of Books</Link>
         </button>
       </div>
+      <div className="mb-5 genres w-[60vw] mx-auto flex flex-col justify-center items-center py-5 border-y border-pink-800">
+        <Feature />
+      </div>
 
-      <div className="my-10 w-[60vw] mx-auto py-5 border-y border-pink-800">
+      <div className="my-10 w-[60vw] mx-auto py-5 border-b border-pink-800">
         <h4 className="londrina-color md:text-5xl text-2xl"> New Arrivals</h4>
         <h6 className="bona md:text-xl text-base mb-8">
           Explore Fresh Arrivals and Find Your Next Great Read

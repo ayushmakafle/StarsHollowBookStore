@@ -32,6 +32,22 @@ const FaqSection = () => {
         "Unfortunately, we cannot accommodate specific delivery date and time requests as deliveries are handled by third-party courier services. We appreciate your understanding.",
     },
     {
+      question: "How do I join the bookclub?",
+      answer: (
+        <div>
+          We have a virtual bookclub at Discord. Click&nbsp;
+          <a
+            href="https://discord.com/invite/starshollow"
+            target="_blank"
+            className="underline text-pink-800"
+          >
+            here
+          </a>
+          &nbsp;to join the club today!{" "}
+        </div>
+      ),
+    },
+    {
       question: "I am an investor. How can I reach out?",
       answer: (
         <div>

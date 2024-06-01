@@ -3,7 +3,6 @@ import Layout from "../Layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Feature from "../FeatureSection";
 
 import StarsHollowImg from "../../assets/images/bookstore.png";
 import JoinBookClubImg from "../../assets/images/bookclub.png";
@@ -26,7 +25,7 @@ const AboutUs = () => {
         <h1 className="londrina-color text-4xl font-bold text-center mb-6">
           About Us
         </h1>
-        <div className="mb-4 border-b border-pink-800 pb-10">
+        <div className="mb-4 pb-10">
           <div className="flex md:flex-row flex-col md:justify-center gap-10  items-center">
             <div>
               <h2 className="bona text-2xl font-bold text-pink-800 mb-4">
@@ -48,7 +47,6 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <Feature />
         <div className="flex  md:flex-row flex-col gap-10 justify-between border-y border-pink-800 py-10">
           <div className="md:w-2/5 w-full">
             <h2 className="bona text-2xl font-bold text-pink-800 mb-4">
