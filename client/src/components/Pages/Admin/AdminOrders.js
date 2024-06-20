@@ -5,6 +5,7 @@ import Layout from "../../../components/Layout/Layout";
 import { useAuth } from "../../../context/auth";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
@@ -49,6 +50,17 @@ const AdminOrders = () => {
     }
   };
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        toast.info("Order Id copied to clipboard");
+      },
+      (err) => {
+        console.error("Failed to copy: ", err);
+      }
+    );
+  };
+
   return (
     <Layout title={"All Orders Data"}>
       <div className="container mx-auto p-3">
@@ -67,6 +79,7 @@ const AdminOrders = () => {
                     <table className="w-full table-auto">
                       <thead>
                         <tr className="bg-pink-900 text-white">
+                          <th className="sm:p-2 p-1">Order ID</th>
                           <th className="sm:p-2 p-1">Status</th>
                           <th className="sm:p-2 py-1">Buyer</th>
                           <th className="sm:p-2 p-1">Date</th>
@@ -76,6 +89,12 @@ const AdminOrders = () => {
                       </thead>
                       <tbody>
                         <tr className="text-center">
+                          <td
+                            className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
+                            onClick={() => copyToClipboard(o?._id)}
+                          >
+                            {o?._id}
+                          </td>
                           <td className="sm:p-2 p-1">
                             <Select
                               bordered={false}
@@ -90,11 +109,7 @@ const AdminOrders = () => {
                               ))}
                             </Select>
                           </td>
-                          <td className="sm:p-2 p-1">
-                            <Link to={`admin/users/${o?.buyer}`}>
-                              {o?.buyer?.username}
-                            </Link>
-                          </td>
+                          <td className="sm:p-2 p-1">{o?.buyer?.username}</td>
                           <td className="sm:p-2 p-1">
                             {formatDate(o?.createdAt)}
                           </td>

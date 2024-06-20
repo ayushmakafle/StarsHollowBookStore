@@ -3,6 +3,7 @@ import UserMenu from "./UserMenu";
 import Layout from "../../../components/Layout/Layout";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
+import { toast } from "react-toastify";
 
 const formatDate = (dateString) => {
   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -25,6 +26,17 @@ const MyOrders = () => {
   useEffect(() => {
     if (auth?.token) getOrders();
   }, [auth?.token]);
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        toast.info("Order Id copied to clipboard");
+      },
+      (err) => {
+        console.error("Failed to copy: ", err);
+      }
+    );
+  };
 
   return (
     <Layout>
@@ -56,7 +68,12 @@ const MyOrders = () => {
                     <tbody>
                       <tr className="text-center">
                         <td className="hidden sm:block sm:p-2 p-1">{i + 1}</td>
-                        <td className="sm:p-2 p-1 mx-2">{o?._id}</td>
+                        <td
+                          className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
+                          onClick={() => copyToClipboard(o?._id)}
+                        >
+                          {o?._id}
+                        </td>
                         <td className="sm:p-2 p-1">{o?.status}</td>
                         <td className="sm:p-2 p-1">
                           {formatDate(o?.createdAt)}
