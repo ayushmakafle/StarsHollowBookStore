@@ -1,6 +1,4 @@
 import { useState } from "react";
-import DownArrow from "../../assets/images/dropdown-icon.png";
-import UpArrow from "../../assets/images/dropdown-selected.png";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

@@ -40,7 +40,7 @@ const BookDetails = () => {
   };
 
   const goBack = () => {
-    navigate(-1); // Navigate back
+    navigate(-1);
   };
 
   return (
@@ -57,7 +57,7 @@ const BookDetails = () => {
             <img
               src={`/api/v1/book/book-photo/${book._id}`}
               alt={book.name}
-              className="w-full h-auto object-cover"
+              className=" h-[70vh] "
             />
           </div>
           <div className="card">
