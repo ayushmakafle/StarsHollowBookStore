@@ -165,20 +165,19 @@ export const updateBookController = async (req, res) => {
     //validation
     switch (true) {
       case !name:
-        return res.status(500).send({ error: "Name is Required" });
+        return res.status(501).send({ error: "Name is Required" });
       case !description:
-        return res.status(500).send({ error: "Description is Required" });
-      case !author:
-        return res.status(500).send({ error: "author is Required" });
+        return res.status(502).send({ error: "Description is Required" });
+
       case !price:
-        return res.status(500).send({ error: "Price is Required" });
+        return res.status(504).send({ error: "Price is Required" });
       case !genre:
-        return res.status(500).send({ error: "Genre is Required" });
+        return res.status(505).send({ error: "Genre is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
       case photo && photo.size > 1000000:
         return res
-          .status(500)
+          .status(506)
           .send({ error: "photo is Required and should be less then 1mb" });
     }
 
