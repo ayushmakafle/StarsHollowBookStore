@@ -54,6 +54,38 @@ const userVerifyMail = async (req, res) => {
   }
 };
 
+const sendOrderStatusUpdateEmail = async (username, email, orderId, status) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "starshollowb@gmail.com",
+        pass: `${process.env.SMTP_PASSWORD}`,
+      },
+    });
+
+    const mailOptions = {
+      from: "starshollowb@gmail.com",
+      to: email,
+      subject: `Your order ${orderId} status has been updated`,
+      html: `<p>Hi ${username},</p><p>Your order with ID <strong>${orderId}</strong> status has been updated to <strong>${status}</strong>.</p>`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Order status update email has been sent: ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const registerController = async (req, res) => {
   try {
     const {
@@ -256,6 +288,7 @@ export const getOrdersController = async (req, res) => {
     });
   }
 };
+
 //orders
 export const getAllOrdersController = async (req, res) => {
   try {
@@ -279,17 +312,28 @@ export const orderStatusController = async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
-    const orders = await orderModel.findByIdAndUpdate(
-      orderId,
-      { status },
-      { new: true }
-    );
-    res.json(orders);
+
+    const order = await orderModel
+      .findByIdAndUpdate(orderId, { status }, { new: true })
+      .populate("buyer", "username email");
+
+    if (!order) {
+      return res.status(404).send({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    // Send email to the user about the order status update
+    const { username, email } = order.buyer;
+    await sendOrderStatusUpdateEmail(username, email, orderId, status);
+
+    res.json(order);
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error While Updating Order",
+      message: "Error while updating order",
       error,
     });
   }

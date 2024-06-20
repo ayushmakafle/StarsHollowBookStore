@@ -46,6 +46,7 @@ const MyOrders = () => {
                     <thead>
                       <tr className="bg-pink-900 text-white">
                         <th className="hidden sm:block sm:p-2 p-1">SNo.</th>
+                        <th className="sm:p-2 p-1">Order ID</th>
                         <th className="sm:p-2 p-1">Status</th>
                         <th className="sm:p-2 p-1">Date</th>
                         <th className="sm:p-2 p-1">Payment</th>
@@ -55,6 +56,7 @@ const MyOrders = () => {
                     <tbody>
                       <tr className="text-center">
                         <td className="hidden sm:block sm:p-2 p-1">{i + 1}</td>
+                        <td className="sm:p-2 p-1 mx-2">{o?._id}</td>
                         <td className="sm:p-2 p-1">{o?.status}</td>
                         <td className="sm:p-2 p-1">
                           {formatDate(o?.createdAt)}
