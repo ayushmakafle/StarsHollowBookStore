@@ -20,6 +20,7 @@ const CreateGenre = () => {
       });
       if (data?.success) {
         toast.success(`${name} is created`);
+        setName("");
         getAllGenre();
       } else {
         toast.error(data.message);

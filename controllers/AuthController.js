@@ -2,6 +2,57 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/UserModel.js";
 import orderModel from "../models/OrderModel.js";
 import JWT from "jsonwebtoken";
+import nodemailer from "nodemailer";
+
+//user email verification
+const sendUserVerifyEmail = async (username, email, user_id) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "starshollowb@gmail.com",
+        pass: `${process.env.SMTP_PASSWORD}`,
+      },
+    });
+
+    const mailOptions = {
+      from: "starshollowb@gmail.com",
+      to: email,
+      subject: "Verify your stars hollow bookstore account",
+      html: `<p> Hi ${username},Please click here to <a href="${process.env.REACT_APP_API}/api/v1/auth/verify?id=${user_id}">verify</a>your email.</p>`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("email has been sent ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const userVerifyMail = async (req, res) => {
+  try {
+    console.log(req.query);
+    const updateVerifiedUser = await userModel.updateOne(
+      { _id: req.query.id },
+      {
+        $set: {
+          isEmailVerified: 1,
+        },
+      }
+    );
+    console.log(updateVerifiedUser);
+    res.redirect(`${process.env.FRONTEND_URL}/verified-email`);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
 const registerController = async (req, res) => {
   try {
@@ -50,9 +101,12 @@ const registerController = async (req, res) => {
       password: hashedPassword,
     }).save();
 
+    await sendUserVerifyEmail(username, email, user._id);
+
     return res.status(201).send({
       success: true,
-      message: "User registered successfully",
+      message:
+        "User registered successfully. Email has been sent for verification.",
       user,
     });
   } catch (error) {
@@ -81,12 +135,12 @@ const loginController = async (req, res) => {
         message: "Email is not registered",
       });
     }
-    /* if (user.isEmailVerified !== 1) {
+    if (user.isEmailVerified !== 1) {
       return res.status(200).send({
         success: false,
         message: "Your email isn't verified",
       });
-    } */
+    }
     const match = await comparePassword(password, user.password);
     if (!match) {
       return res.status(200).send({
@@ -250,4 +304,5 @@ export default {
   getOrdersController,
   getAllOrdersController,
   orderStatusController,
+  userVerifyMail,
 };

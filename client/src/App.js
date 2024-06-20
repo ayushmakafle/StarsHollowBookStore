@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Layout from "./components/Layout/Layout";
 import LandingPage from "./components/Pages/LandingPage";
 import AboutUs from "./components/Pages/AboutUs";
 import PageNotFound from "./components/Pages/PageNotFound";
@@ -30,6 +29,7 @@ import CartPage from "./components/Pages/CartPage";
 import Header from "./components/Layout/Header";
 import AdminOrders from "./components/Pages/Admin/AdminOrders";
 import Wishlist from "./components/Pages/Wishlist";
+import EmailVerified from "./components/Pages/User/EmailVerified";
 
 function App() {
   return (
@@ -42,6 +42,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/verified-email" element={<EmailVerified />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
