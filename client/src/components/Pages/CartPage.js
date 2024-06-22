@@ -94,6 +94,7 @@ const CartPage = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getToken();
   }, [auth?.token]);
@@ -136,6 +137,24 @@ const CartPage = () => {
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     toast.success("Book added to wishlist");
   };
+
+  useEffect(() => {
+    // Fetch product quantities from the database
+    const fetchProductQuantities = async () => {
+      try {
+        const bookIds = cart.map((item) => item._id); // Use bookIds here
+        const response = await axios.post("/api/v1/book/getQuantities", {
+          bookIds, // Ensure you're sending the correct field name
+        });
+        const quantities = response.data.quantities;
+        setProductQuantities(quantities);
+      } catch (error) {
+        console.error("Error fetching product quantities:", error);
+      }
+    };
+
+    fetchProductQuantities();
+  }, [cart]);
 
   return (
     <Layout>
@@ -213,9 +232,18 @@ const CartPage = () => {
                           <button
                             className="md:px-2 px-1 md:py-1 py-0"
                             onClick={() => updateQuantity(p._id, "increment")}
+                            disabled={
+                              productQuantities[p._id] - p.numberOfItems === 0
+                            }
                           >
                             +
                           </button>
+                        </div>
+                        <div>
+                          <span>
+                            Available in stock:
+                            {productQuantities[p._id] - p.numberOfItems}
+                          </span>
                         </div>
                       </div>
                     </div>

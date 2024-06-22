@@ -475,6 +475,11 @@ export const bookStockUpdate = async (req, res) => {
 export const getBookQuantities = async (req, res) => {
   try {
     const { bookIds } = req.body;
+    console.log("Received book IDs:", bookIds); // Debugging log
+
+    if (!bookIds || !Array.isArray(bookIds)) {
+      return res.status(400).json({ error: "Invalid book IDs format" });
+    }
 
     // Find books by IDs and retrieve their quantities
     const books = await bookModel.find({ _id: { $in: bookIds } });
@@ -482,6 +487,7 @@ export const getBookQuantities = async (req, res) => {
     books.forEach((book) => {
       quantities[book._id] = book.quantity;
     });
+    console.log("Book quantities:", quantities);
 
     res.json({ quantities });
   } catch (error) {

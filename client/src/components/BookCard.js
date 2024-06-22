@@ -81,21 +81,24 @@ const BookCard = ({ book }) => {
         </p>
         <p className="price mb-2 font-bold text-xl px-4">$ {book.price}</p>
         <div className="buttons flex justify-end gap-4 px-4 text-lg mb-4">
-          {/* <button className="bg-pink-800 text-white py-1 mb-2 rounded-xl p-4">
-            More Details
-          </button> */}
-          <button
-            className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
-            onClick={handleAddToCart}
-          >
-            <FontAwesomeIcon icon={faCartPlus} />
-          </button>
-          <button
-            className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
-            onClick={handleAddToWishlist}
-          >
-            <FontAwesomeIcon icon={faHeart} />
-          </button>
+          {book.quantity > 0 ? (
+            <>
+              <button
+                className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
+                onClick={handleAddToCart}
+              >
+                <FontAwesomeIcon icon={faCartPlus} />
+              </button>
+              <button
+                className="bg-pink-800 text-white px-2 py-1 mb-2 rounded-xl"
+                onClick={handleAddToWishlist}
+              >
+                <FontAwesomeIcon icon={faHeart} />
+              </button>
+            </>
+          ) : (
+            <p className="text-red-500 font-bold">Out of stock</p>
+          )}
         </div>
       </div>
     </div>
