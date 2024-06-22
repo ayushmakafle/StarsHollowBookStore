@@ -112,38 +112,6 @@ const AllBooksPage = () => {
   return (
     <Layout>
       <div className="container mx-auto flex flex-row mt-3">
-        {/* <div className="w-1/4">
-          <h4 className="text-center">Filter By Genre</h4>
-          <div className="items-center">
-            {genres?.map((c) => (
-              <div key={c._id} className="flex flex-col items-center mr-4">
-                <Checkbox
-                  onChange={(e) => handleFilter(e.target.checked, c._id)}
-                >
-                  {c.name}
-                </Checkbox>
-              </div>
-            ))}
-          </div>
-          <h4 className="text-center mt-4">Filter By Price</h4>
-          <div className="flex flex-col">
-            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {Prices?.map((p) => (
-                <div key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
-                </div>
-              ))}
-            </Radio.Group>
-          </div>
-          <div className="flex flex-col">
-            <button
-              className="bg-red-500 text-white py-2 px-4 mt-4"
-              onClick={() => window.location.reload()}
-            >
-              RESET FILTERS
-            </button>
-          </div>
-        </div> */}
         <div className="w-[60vw] mx-auto">
           <div className="my-10 genres py-5 border-y border-pink-800">
             <h4 className="londrina-color text-5xl"> Genres</h4>
@@ -160,10 +128,10 @@ const AllBooksPage = () => {
               <BookCard key={book._id} book={book} />
             ))}
           </div>
-          <div className="m-2 p-3">
+          <div className="m-2 p-3 text-center">
             {books && books.length < total && (
               <button
-                className="bg-pink-800 text-white py-2 px-4 rounded-md"
+                className="bg-pink-900 text-white py-2 px-4 rounded-md"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);

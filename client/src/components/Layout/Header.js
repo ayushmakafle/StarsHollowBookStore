@@ -80,7 +80,7 @@ const Header = () => {
         <div className="max-w-7xl mx-auto pt-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="hover:border-b border-pink-800 px-3 py-2">
+              <div className="px-3 py-2">
                 <Link to="/">
                   <img className="h-24 w-24 my-10" src={LogoImg} alt="Logo" />
                 </Link>
