@@ -104,7 +104,7 @@ const sendRestPasswordMail = async (email, token) => {
       from: "starshollowb@gmail.com",
       to: email,
       subject: "Reset your password",
-      html: `<p> Hi, This is your token to change password: <br> <h1> ${token} </h1> <br> <h3> DO NOT SHARE YOUR TOKEN </h3> </p>`,
+      html: `<p> Hi, This is your token to change password: <br> <h1> ${token} </h1> <br> <p>The token expires in 10 minutes</p><br><h3> DO NOT SHARE YOUR TOKEN </h3> </p>`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -195,20 +195,20 @@ const loginController = async (req, res) => {
     }
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(404).send({
+      return res.status(401).send({
         success: false,
         message: "Email is not registered",
       });
     }
     if (user.isEmailVerified !== 1) {
-      return res.status(200).send({
+      return res.status(402).send({
         success: false,
         message: "Your email isn't verified",
       });
     }
     const match = await comparePassword(password, user.password);
     if (!match) {
-      return res.status(200).send({
+      return res.status(403).send({
         success: false,
         message: "Invalid email or password",
       });
@@ -310,8 +310,27 @@ export const forgetLoad = async (req, res) => {
   try {
     const { email } = req.body;
     const randomString = randomstring.generate(7);
-    await userModel.findOneAndUpdate({ email: email }, { token: randomString });
+
+    const user = await userModel.findOneAndUpdate(
+      { email: email },
+      { token: randomString },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Email is not registered",
+      });
+    }
+
     await sendRestPasswordMail(email, randomString);
+
+    setTimeout(async () => {
+      user.token = null;
+      await user.save();
+    }, 10 * 60 * 1000);
+
     return res.status(201).json({
       success: true,
       message: "Reset email sent successfully",
@@ -330,7 +349,14 @@ export const resetPassword = async (req, res) => {
   try {
     const { email, token, newPassword } = req.body;
     let user = await userModel.findOne({ email, token });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid token or email",
+      });
+    }
     user.password = await hashPassword(newPassword);
+    user.token = null; // Clear the token after successful password reset
     await user.save();
     return res.status(200).json({
       success: true,

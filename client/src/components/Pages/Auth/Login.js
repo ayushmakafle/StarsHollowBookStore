@@ -11,7 +11,7 @@ import { useAuth } from "../../../context/auth";
 
 const UserLogin = () => {
   const [auth, setAuth] = useAuth();
-  const [visible, setVisible] = useState("");
+  const [visible, setVisible] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -39,7 +39,15 @@ const UserLogin = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 
@@ -83,14 +91,14 @@ const UserLogin = () => {
                     <FontAwesomeIcon
                       icon={faEye}
                       className="cursor-pointer"
-                      size={20}
+                      size="lg"
                       onClick={() => setVisible(false)}
                     />
                   ) : (
                     <FontAwesomeIcon
                       icon={faEyeSlash}
                       className="cursor-pointer"
-                      size={20}
+                      size="lg"
                       onClick={() => setVisible(true)}
                     />
                   )}
