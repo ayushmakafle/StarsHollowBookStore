@@ -4,7 +4,6 @@ import AdminMenu from "./AdminMenu";
 import Layout from "../../../components/Layout/Layout";
 import { useAuth } from "../../../context/auth";
 import { Select } from "antd";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const { Option } = Select;
@@ -19,12 +18,12 @@ const AdminOrders = () => {
     "Not Process",
     "Processing",
     "Shipped",
-    "delivered",
-    "cancel",
+    "Delivered",
+    "Cancelled",
   ]);
   const [changeStatus, setCHangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
 
   const getOrders = async () => {
     try {
@@ -73,77 +72,93 @@ const AdminOrders = () => {
               All Orders
             </h1>
             <div className="overflow-x-auto">
-              {orders?.map((o, i) => {
-                return (
-                  <div className="border shadow mb-6" key={i}>
-                    <table className="w-full table-auto">
-                      <thead>
-                        <tr className="bg-pink-900 text-white">
-                          <th className="sm:p-2 p-1">Order ID</th>
-                          <th className="sm:p-2 p-1">Status</th>
-                          <th className="sm:p-2 py-1">Buyer</th>
-                          <th className="sm:p-2 p-1">Date</th>
-                          <th className="sm:p-2 p-1">Payment</th>
-                          <th className="sm:p-2 p-1">Quantity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="text-center">
-                          <td
-                            className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
-                            onClick={() => copyToClipboard(o?._id)}
-                          >
-                            {o?._id}
-                          </td>
-                          <td className="sm:p-2 p-1">
-                            <Select
-                              bordered={false}
-                              onChange={(value) => handleChange(o._id, value)}
-                              defaultValue={o?.status}
-                              className="w-full"
-                            >
-                              {status.map((s, i) => (
-                                <Option key={i} value={s}>
-                                  {s}
-                                </Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td className="sm:p-2 p-1">{o?.buyer?.username}</td>
-                          <td className="sm:p-2 p-1">
-                            {formatDate(o?.createdAt)}
-                          </td>
-                          <td className="sm:p-2 p-1">
-                            {o?.payment.success ? "Success" : "Failed"}
-                          </td>
-                          <td className="sm:p-2 p-1">{o?.products?.length}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div className="p-4">
-                      {o?.products?.map((p) => (
-                        <div
-                          className="flex mb-4 border p-4 shadow-sm"
-                          key={p._id}
+              {orders?.map((o, i) => (
+                <div className="border shadow mb-6" key={o._id}>
+                  <table className="w-full table-auto">
+                    <thead>
+                      <tr className="bg-pink-900 text-white">
+                        <th className="sm:p-2 p-1">Order ID</th>
+                        <th className="sm:p-2 p-1">Status</th>
+                        <th className="sm:p-2 py-1">Buyer</th>
+                        <th className="sm:p-2 p-1">Date</th>
+                        <th className="sm:p-2 p-1">Payment</th>
+                        <th className="sm:p-2 p-1">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="text-center">
+                        <td
+                          className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
+                          onClick={() => copyToClipboard(o._id)}
                         >
-                          <div className="w-[100px]">
+                          {o._id}
+                        </td>
+                        <td className="sm:p-2 p-1">
+                          <Select
+                            bordered={false}
+                            onChange={(value) => handleChange(o._id, value)}
+                            defaultValue={o.status}
+                            className="w-full"
+                          >
+                            {status.map((s, i) => (
+                              <Option key={i} value={s}>
+                                {s}
+                              </Option>
+                            ))}
+                          </Select>
+                        </td>
+                        <td className="sm:p-2 p-1">{o.buyer.username}</td>
+                        <td className="sm:p-2 p-1">
+                          {formatDate(o.createdAt)}
+                        </td>
+                        <td className="sm:p-2 p-1">
+                          {o.payment.success ? "Success" : "Failed"}
+                        </td>
+                        <td className="sm:p-2 p-1">
+                          {o.products.reduce(
+                            (acc, product) => acc + product.quantity,
+                            0
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="p-4">
+                    {o.products.map((product) => (
+                      <div
+                        className="flex mb-4 border p-4 shadow-sm"
+                        key={product._id}
+                      >
+                        <div className="w-[100px]">
+                          {product.book ? (
                             <img
-                              src={`/api/v1/book/book-photo/${p._id}`}
-                              alt={p.name}
+                              src={`/api/v1/book/book-photo/${product.book._id}`}
+                              alt={product.book.name}
                               className="w-full h-auto rounded"
                             />
-                          </div>
-                          <div className="w-2/3 pl-4">
-                            <p className="font-bold">{p.name}</p>
-                            <p>{p.description.substring(0, 30)}</p>
-                            <p>Price: ${p.price}</p>
-                          </div>
+                          ) : (
+                            <div className="w-full h-24 bg-gray-200 rounded" />
+                          )}
                         </div>
-                      ))}
-                    </div>
+                        <div className="w-2/3 pl-4">
+                          {product.book ? (
+                            <>
+                              <p className="font-bold">{product.book.name}</p>
+                              <p>Price: ${product.book.price}</p>
+                            </>
+                          ) : (
+                            <>
+                              <p className="font-bold">Loading...</p>
+                              <p>Loading...</p>
+                            </>
+                          )}
+                          <p>Quantity: {product.quantity}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>

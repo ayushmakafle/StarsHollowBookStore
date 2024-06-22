@@ -376,15 +376,23 @@ export const getOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({ buyer: req.user._id })
-      .populate("products", "-photo")
-      .populate("buyer", "username");
+      .populate({
+        path: "products.book",
+        select: "name price",
+      })
+      .populate({
+        path: "buyer",
+        select: "username",
+      })
+      .exec();
+
     res.json(orders);
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error(error);
+    res.status(500).json({
       success: false,
       message: "Error while getting orders",
-      error,
+      error: error.message,
     });
   }
 };
@@ -394,8 +402,14 @@ export const getAllOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({})
-      .populate("products", "-photo")
-      .populate("buyer", "username");
+      .populate({
+        path: "products.book",
+        select: "name price",
+      })
+      .populate({
+        path: "buyer",
+        select: "username",
+      });
     res.json(orders);
   } catch (error) {
     console.log(error);

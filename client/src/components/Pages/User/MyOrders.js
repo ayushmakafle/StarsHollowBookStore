@@ -14,6 +14,12 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
 
+  useEffect(() => {
+    if (auth?.token) {
+      getOrders();
+    }
+  }, [auth?.token]);
+
   const getOrders = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/orders");
@@ -22,10 +28,6 @@ const MyOrders = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    if (auth?.token) getOrders();
-  }, [auth?.token]);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(
@@ -40,7 +42,7 @@ const MyOrders = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto  mt-10">
+      <div className="container mx-auto mt-10">
         <div className="flex md:flex-row flex-col gap-20">
           <div className="col-span-12 md:col-span-3">
             <UserMenu />
@@ -48,66 +50,85 @@ const MyOrders = () => {
           <div className="md:w-3/5 w-full">
             <h4 className="londrina-color mb-4 text-3xl">My orders</h4>
 
-            {orders?.map((o, i) => {
-              return (
-                <div
-                  className="border shadow rounded-lg mb-6 max-w-screen-sm "
-                  key={i}
-                >
-                  <table className="w-full ">
-                    <thead>
-                      <tr className="bg-pink-900 text-white">
-                        <th className="hidden sm:block sm:p-2 p-1">SNo.</th>
-                        <th className="sm:p-2 p-1">Order ID</th>
-                        <th className="sm:p-2 p-1">Status</th>
-                        <th className="sm:p-2 p-1">Date</th>
-                        <th className="sm:p-2 p-1">Payment</th>
-                        <th className="sm:p-2 p-1">Quantity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="text-center">
-                        <td className="hidden sm:block sm:p-2 p-1">{i + 1}</td>
-                        <td
-                          className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
-                          onClick={() => copyToClipboard(o?._id)}
-                        >
-                          {o?._id}
-                        </td>
-                        <td className="sm:p-2 p-1">{o?.status}</td>
-                        <td className="sm:p-2 p-1">
-                          {formatDate(o?.createdAt)}
-                        </td>
-                        <td className="sm:p-2 p-1">
-                          {o?.payment.success ? "Success" : "Failed"}
-                        </td>
-                        <td className="sm:p-2 p-1">{o?.products?.length}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="p-4">
-                    {o?.products?.map((p) => (
-                      <div
-                        className="flex mb-4 border p-4 shadow-sm rounded-lg"
-                        key={p._id}
+            {orders?.map((order, index) => (
+              <div
+                className="border shadow rounded-lg mb-6 max-w-screen-sm"
+                key={order._id}
+              >
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-pink-900 text-white">
+                      <th className="hidden sm:block sm:p-2 p-1">SNo.</th>
+                      <th className="sm:p-2 p-1">Order ID</th>
+                      <th className="sm:p-2 p-1">Status</th>
+                      <th className="sm:p-2 p-1">Date</th>
+                      <th className="sm:p-2 p-1">Payment</th>
+                      <th className="sm:p-2 p-1">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="text-center">
+                      <td className="hidden sm:block sm:p-2 p-1">
+                        {index + 1}
+                      </td>
+                      <td
+                        className="sm:p-2 p-1 cursor-pointer text-pink-800 underline"
+                        onClick={() => copyToClipboard(order._id)}
                       >
-                        <div className="w-[100px]">
+                        {order._id}
+                      </td>
+                      <td className="sm:p-2 p-1">{order.status}</td>
+                      <td className="sm:p-2 p-1">
+                        {formatDate(order.createdAt)}
+                      </td>
+                      <td className="sm:p-2 p-1">
+                        {order.payment.success ? "Success" : "Failed"}
+                      </td>
+                      <td className="sm:p-2 p-1">
+                        {order.products.reduce(
+                          (acc, product) => acc + product.quantity,
+                          0
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div className="p-4">
+                  {order.products.map((product, idx) => (
+                    <div
+                      className="flex mb-4 border p-4 shadow-sm rounded-lg"
+                      key={product._id}
+                    >
+                      <div className="w-[100px]">
+                        {product.book ? (
                           <img
-                            src={`/api/v1/book/book-photo/${p._id}`}
-                            alt={p.name}
+                            src={`/api/v1/book/book-photo/${product.book._id}`}
+                            alt={product.book.name}
                             className="w-full h-auto rounded"
                           />
-                        </div>
-                        <div className="w-2/3 pl-4">
-                          <p className="font-bold">{p.name}</p>
-                          <p>Price: ${p.price}</p>
-                        </div>
+                        ) : (
+                          <div className="w-full h-24 bg-gray-200 rounded" />
+                        )}
                       </div>
-                    ))}
-                  </div>
+                      <div className="w-2/3 pl-4">
+                        {product.book ? (
+                          <>
+                            <p className="font-bold">{product.book.name}</p>
+                            <p>Price: ${product.book.price}</p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="font-bold">Loading...</p>
+                            <p>Loading...</p>
+                          </>
+                        )}
+                        <p>Quantity: {product.quantity}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>

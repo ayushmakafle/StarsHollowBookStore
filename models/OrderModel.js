@@ -1,14 +1,20 @@
 import mongoose from "mongoose";
 
+const orderItemSchema = new mongoose.Schema({
+  book: {
+    type: mongoose.ObjectId,
+    ref: "Book",
+  },
+  quantity: {
+    type: Number,
+    default: 1, // default to 1 if quantity is not provided
+  },
+});
+
 const orderSchema = new mongoose.Schema(
   {
-    products: [
-      {
-        type: mongoose.ObjectId,
-        ref: "Book",
-      },
-    ],
-    payment: {},
+    products: [orderItemSchema], // array of order items
+    payment: {}, // your payment information structure
     buyer: {
       type: mongoose.ObjectId,
       ref: "User",
