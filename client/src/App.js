@@ -30,6 +30,8 @@ import Header from "./components/Layout/Header";
 import AdminOrders from "./components/Pages/Admin/AdminOrders";
 import Wishlist from "./components/Pages/Wishlist";
 import EmailVerified from "./components/Pages/User/EmailVerified";
+import Forget from "./components/Pages/Auth/ForgotPassword";
+import ResetPassword from "./components/Pages/Auth/ResetPassword";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route path="/register" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/verified-email" element={<EmailVerified />} />
+        <Route path="/forget" element={<Forget />} />
+        <Route path="/forget-password" element={<ResetPassword />} />
         <Route path="/AllBooks" element={<AllBooksPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<Wishlist />} />

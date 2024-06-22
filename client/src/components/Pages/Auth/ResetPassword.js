@@ -9,37 +9,42 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context/auth";
 
-const UserLogin = () => {
-  const [auth, setAuth] = useAuth();
-  const [visible, setVisible] = useState("");
-  const [password, setPassword] = useState("");
+const ResetPassword = () => {
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+  const [token, setToken] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [visible, setVisible] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+    if (!newPassword.match(passwordRegex)) {
+      return toast.error(
+        "Password must be at least 8 characters, including one special character."
+      );
+    }
     try {
-      const res = await axios.post(`/api/v1/auth/login`, {
+      const res = await axios.post("/api/v1/auth/reset-password", {
         email,
-        password,
+        token,
+        newPassword,
       });
-
-      if (res.data.success) {
-        toast.success(res.data.message);
-        setAuth({
-          ...auth,
-          user: res.data.user,
-          token: res.data.token,
-        });
-        localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate("/");
-      } else {
-        toast.error(res.data.message);
-      }
+      toast.success(
+        "Password reset successful. You can now log in with your new password."
+      );
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 3000);
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred. Please try again later.");
+      }
     }
   };
 
@@ -49,13 +54,15 @@ const UserLogin = () => {
         <div className="w-1/5 md:block hidden mr-20">
           <div className="flex flex-col items-center justify-center">
             <img src={LogoImg} alt="Logo" className="w-full" />
-            <h2 className="signup text-2xl font-bold mt-10">Login</h2>
+            <h2 className="signup text-2xl font-bold mt-10">Reset Password</h2>
           </div>
         </div>
         <div className="md:w-2/5 my-10 w-2/3">
           <div className="register-form p-8 rounded-lg">
             <form onSubmit={handleSubmit}>
-              <h2 className="md:hidden text-2xl font-bold mb-4">Login</h2>
+              <h2 className="md:hidden text-2xl font-bold mb-4">
+                Reset Password
+              </h2>
 
               <div className="mb-4">
                 <input
@@ -68,13 +75,24 @@ const UserLogin = () => {
                   required
                 />
               </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  name="token"
+                  value={token}
+                  onChange={(e) => setToken(e.target.value)}
+                  className="block w-full border-gray-300 rounded-md p-2"
+                  placeholder="Enter your token"
+                  required
+                />
+              </div>
               <div className="mb-4 relative">
                 <input
                   placeholder="Enter your password"
                   type={visible ? "text" : "password"}
                   name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   className="block w-full border-gray-300 rounded-md p-2 pr-10"
                   required
                 />
@@ -101,16 +119,9 @@ const UserLogin = () => {
                   type="submit"
                   className=" text-white px-4 py-2 rounded-md hover:bg-pink-800 w-full"
                 >
-                  Login
+                  Reset Password
                 </button>
-                <div className="mt-2 flex items-center justify-between">
-                  <div>
-                    <Link to="/forget" className=" inline-block">
-                      <button className="py-2 px-4 text-white rounded-md hover:bg-pink-800">
-                        Forgot Password?
-                      </button>
-                    </Link>
-                  </div>
+                <div className="mt-2 flex items-center justify-end">
                   <div>
                     <h5 className="inline-block mr-2 px-4">
                       New at Stars Hollow?
@@ -134,4 +145,4 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+export default ResetPassword;

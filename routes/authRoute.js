@@ -29,6 +29,10 @@ router.get("/orders", requireSignIn, AuthController.getOrdersController);
 
 router.get("/all-orders", AuthController.getAllOrdersController);
 
+router.post("/forget", AuthController.forgetLoad);
+
+router.post("/reset-password", AuthController.resetPassword);
+
 router.put(
   "/order-status/:orderId",
   requireSignIn,

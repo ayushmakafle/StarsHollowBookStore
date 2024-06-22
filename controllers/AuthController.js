@@ -3,6 +3,7 @@ import userModel from "../models/UserModel.js";
 import orderModel from "../models/OrderModel.js";
 import JWT from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import randomstring from "randomstring";
 
 //user email verification
 const sendUserVerifyEmail = async (username, email, user_id) => {
@@ -79,6 +80,38 @@ const sendOrderStatusUpdateEmail = async (username, email, orderId, status) => {
         console.log(error);
       } else {
         console.log("Order status update email has been sent: ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const sendRestPasswordMail = async (email, token) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "starshollowb@gmail.com",
+        pass: `${process.env.SMTP_PASSWORD}`,
+      },
+    });
+
+    const mailOptions = {
+      from: "starshollowb@gmail.com",
+      to: email,
+      subject: "Reset your password",
+      html: `<p> Hi, This is your token to change password: <br> <h1> ${token} </h1> <br> <h3> DO NOT SHARE YOUR TOKEN </h3> </p>`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email has been sent for reset password", info.response);
       }
     });
   } catch (error) {
@@ -272,6 +305,47 @@ export const updateProfileController = async (req, res) => {
   }
 };
 
+// forget password
+export const forgetLoad = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const randomString = randomstring.generate(7);
+    await userModel.findOneAndUpdate({ email: email }, { token: randomString });
+    await sendRestPasswordMail(email, randomString);
+    return res.status(201).json({
+      success: true,
+      message: "Reset email sent successfully",
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Error processing request",
+      error: error.message,
+    });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, token, newPassword } = req.body;
+    let user = await userModel.findOne({ email, token });
+    user.password = await hashPassword(newPassword);
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Error resetting password",
+      error: error.message,
+    });
+  }
+};
+
 export const getOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
@@ -349,4 +423,6 @@ export default {
   getAllOrdersController,
   orderStatusController,
   userVerifyMail,
+  forgetLoad,
+  resetPassword,
 };
