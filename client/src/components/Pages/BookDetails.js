@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Layout from "../Layout/Layout";
 import BookCard from "../BookCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartPlus,
+  faCircleLeft,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
+import { useCart } from "../../context/cart";
+import { useWishlist } from "../../context/wishlist";
 
 const BookDetails = () => {
   const params = useParams();
   const [book, setBook] = useState({});
   const [relatedBooks, setRelatedBooks] = useState([]);
   const navigate = useNavigate();
+  const [cart, setCart] = useCart();
+  const [wishlist, setWishlist] = useWishlist();
 
   useEffect(() => {
-    if (params?.slug) getBook();
+    if (params?.slug) {
+      getBook();
+    }
   }, [params?.slug]);
 
   const getBook = async () => {
     try {
       const { data } = await axios.get(`/api/v1/book/get-book/${params.slug}`);
       setBook(data?.book);
-      getSimilarBook(data?.book._id, data?.book.genre._id);
+      getSimilarBooks(data?.book._id, data?.book.genre?._id);
     } catch (error) {
       console.error("Error fetching book:", error);
     }
   };
 
-  const getSimilarBook = async (pid, cid) => {
+  const getSimilarBooks = async (pid, cid) => {
     try {
       const { data } = await axios.get(
         `/api/v1/book/related-book/${pid}/${cid}`
@@ -41,6 +50,47 @@ const BookDetails = () => {
 
   const goBack = () => {
     navigate(-1);
+  };
+
+  const handleAddToCart = () => {
+    const updatedCart = [...cart];
+    const existingProduct = updatedCart.find((item) => item._id === book._id);
+    if (existingProduct) {
+      existingProduct.numberOfItems += 1;
+    } else {
+      updatedCart.push({
+        _id: book._id,
+        name: book.name,
+        slug: book.slug,
+        author: book.author?.name,
+        price: book.price,
+        numberOfItems: 1,
+      });
+    }
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    toast.success("Book added to cart");
+  };
+
+  const handleAddToWishlist = () => {
+    const updatedWishlist = [...wishlist];
+    const existingProduct = updatedWishlist.find(
+      (item) => item._id === book._id
+    );
+    if (existingProduct) {
+      existingProduct.numberOfItems += 1;
+    } else {
+      updatedWishlist.push({
+        _id: book._id,
+        name: book.name,
+        author: book.author?.name,
+        price: book.price,
+        numberOfItems: 1,
+      });
+    }
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    toast.success("Book added to wishlist");
   };
 
   return (
@@ -71,7 +121,7 @@ const BookDetails = () => {
                     <p className="md:text-2xl text-xl bona text-pink-900 mb-5 hover:text-pink-600">
                       <span className="londrina-color">Author:</span>{" "}
                       <Link to={`/author/${book.author.slug}`}>
-                        {book?.author?.name}
+                        {book.author.name}
                       </Link>
                     </p>
                   )}
@@ -95,6 +145,21 @@ const BookDetails = () => {
               <p className="md:pl-10 card-text text-black pt-3 bona md:text-xl text-lg">
                 {book.description}
               </p>
+              <div className="buttons flex justify-end gap-4 px-4 text-lg my-4">
+                <button
+                  className="bg-pink-800 text-white px-4 py-2 mb-2 rounded-md"
+                  onClick={handleAddToCart}
+                >
+                  <FontAwesomeIcon icon={faCartPlus} />
+                  &nbsp; Add to Cart
+                </button>
+                <button
+                  className="bg-pink-800 text-white px-4 py-2 mb-2 rounded-md"
+                  onClick={handleAddToWishlist}
+                >
+                  <FontAwesomeIcon icon={faHeart} /> &nbsp;Add to Wishlist
+                </button>
+              </div>
             </div>
           </div>
         </div>
