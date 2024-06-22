@@ -111,8 +111,9 @@ const CartPage = () => {
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);
+      await updateProductQuantities(); // Ensure this function updates quantities correctly
       navigate("/dashboard/user/orders");
-      toast.success("Payment Completed Successfully ");
+      toast.success("Payment Completed Successfully");
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -136,6 +137,26 @@ const CartPage = () => {
     setWishlist(updatedWishlist);
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     toast.success("Book added to wishlist");
+  };
+
+  const updateProductQuantities = async () => {
+    try {
+      await Promise.all(
+        cart.map(async (item) => {
+          console.log("Updating quantity for item:", item);
+          const quantityToBuy = item.numberOfItems; // Adjust how quantityToBuy is calculated
+          await axios.put("/api/v1/book/updateStock", {
+            slug: item.slug,
+            quantityToBuy: quantityToBuy, // Ensure quantityToBuy is correctly set here
+          });
+          console.log("Product quantity updated successfully for item:", item);
+        })
+      );
+
+      console.log("Product quantities updated successfully");
+    } catch (error) {
+      console.error("Error updating product quantities:", error);
+    }
   };
 
   useEffect(() => {

@@ -384,81 +384,36 @@ export const getLatestBooks = async (req, res) => {
   }
 };
 
-// export const updateBookRating = async (req, res) => {
-//   try {
-//     const { bookId } = req.params;
-//     const { rating } = req.body;
-//     const { user } = req;
-//     // Find the book by ID
-//     const book = await bookModel.findById(bookId);
-//     if (!book) {
-//       return res.status(404).json({ error: "Book not found" });
-//     }
-//     // Ensure that book.ratings is an array
-//     book.ratings = book.ratings || [];
-
-//     // Update or add the rating given by the doctor
-//     const existingRatingIndex = book.ratings.findIndex(
-//       (r) => r.doctorId && r.doctorId.toString() === user._id.toString()
-//     );
-//     if (existingRatingIndex !== -1) {
-//       book.ratings[existingRatingIndex].rating = Number(rating);
-//     } else {
-//       book.ratings.push({ doctorId: user._id, rating: Number(rating) });
-//     }
-
-//     book.markModified("ratings");
-
-//     // Filter out ratings without doctorId and calculate average rating
-
-//     const doctorRatings = book.ratings.filter((r) => r._id);
-//     const totalRating = doctorRatings.reduce((sum, r) => sum + r.rating, 0);
-//     const averageRating =
-//       doctorRatings.length > 0 ? totalRating / doctorRatings.length : 0;
-
-//     // Update the averageRating field in the book model
-//     book.averageRating = averageRating;
-//     console.log("doctorRatings:", doctorRatings);
-//     console.log("totalRating:", totalRating);
-//     console.log("averageRating:", averageRating);
-//     // Save the changes
-//     await book.save();
-
-//     // Send a response back to the client
-//     res.json({ success: true, book });
-//   } catch (error) {
-//     console.error("Error updating book rating:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-
 export const bookStockUpdate = async (req, res) => {
   try {
+    console.log("Request received:", req.body); // Ensure request body is logged
     const { slug, quantityToBuy } = req.body;
 
-    // Parse quantityToBuy as a number
+    if (!slug || !quantityToBuy) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
+    }
+
     const quantityToBuyNumber = parseInt(quantityToBuy);
 
-    // Find the book by its slug
     const book = await bookModel.findOne({ slug: slug });
 
     if (!book) {
       return res
         .status(404)
-        .json({ success: false, message: "Book not found" });
+        .json({ success: false, message: "Book not found for slug: " + slug });
     }
 
-    // Check if the available quantity is sufficient for the purchase
     if (book.quantity < quantityToBuyNumber) {
       return res
         .status(400)
         .json({ success: false, message: "Insufficient quantity in stock" });
     }
 
-    // Update the quantity by subtracting the quantity being purchased
-    book.quantity = quantityToBuyNumber;
+    // Update the book quantity
+    book.quantity -= quantityToBuyNumber;
 
-    // Save the updated book
     await book.save();
 
     res.json({

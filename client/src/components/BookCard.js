@@ -27,6 +27,7 @@ const BookCard = ({ book }) => {
       updatedCart.push({
         _id: book._id,
         name: book.name,
+        slug: book.slug,
         author: book.author.name,
         price: book.price,
         numberOfItems: 1,
