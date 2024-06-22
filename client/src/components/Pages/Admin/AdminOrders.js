@@ -73,7 +73,7 @@ const AdminOrders = () => {
             </h1>
             <div className="overflow-x-auto">
               {orders?.map((o, i) => (
-                <div className="border shadow mb-6" key={o._id}>
+                <div className="border-b border-pink-900 mb-6" key={o._id}>
                   <table className="w-full table-auto">
                     <thead>
                       <tr className="bg-pink-900 text-white">

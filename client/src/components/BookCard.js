@@ -74,7 +74,7 @@ const BookCard = ({ book }) => {
         />
       </div>
       <div className="card-body">
-        <h5 className="card-title text-2xl font-bold text-pink-800 mb-2 p-4 h-20">
+        <h5 className="card-title md:text-2xl text-xl font-bold text-pink-800 mb-2 p-4 h-20">
           {book.name}
         </h5>
         <p className="card-text mb-2 text-lg text-pink-900 px-4">

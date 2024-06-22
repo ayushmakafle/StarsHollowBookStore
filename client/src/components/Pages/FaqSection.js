@@ -86,7 +86,7 @@ const FaqSection = () => {
               onClick={() => toggleDropdown(index)}
             >
               <div
-                className={`font-bold text-lg py-3 ${
+                className={`font-bold md:text-lg text-base py-3 ${
                   selected === index ? "text-pink-900" : "text-black"
                 }`}
               >
@@ -103,7 +103,7 @@ const FaqSection = () => {
                 selected === index ? "max-h-[200px]" : "max-h-0"
               }`}
             >
-              <div className="font-medium text-lg max-w-[480px] pt-4">
+              <div className="font-medium md:text-lg text-base max-w-[480px] pt-4">
                 {item.answer}
               </div>
             </div>

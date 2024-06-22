@@ -6,13 +6,13 @@ import BookClubImg from "../assets/images/bookclub2.png";
 
 const Feature = () => {
   return (
-    <div className="container mx-auto flex flex-col justify-center items-center md:mb-24 ">
+    <div className="container mx-auto flex flex-col justify-center items-center md:mb-10 ">
       <div className="text-center mt-10">
         <h3 className="bona text-pink-900 md:text-[40px] text-[30px] font-bold">
           What we offer{" "}
         </h3>
       </div>
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-8 text-center my-10">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-8 text-center my-6">
         <div className="max-w-[360px] mx-auto">
           <OfferCard
             icon={BookImg}

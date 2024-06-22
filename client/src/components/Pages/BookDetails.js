@@ -112,7 +112,7 @@ const BookDetails = () => {
           </div>
           <div className="card">
             <div className="card-body">
-              <h2 className="bona md:text-5xl text-3xl card-title text-center mb-10  text-pink-600">
+              <h2 className="bona md:text-5xl text-3xl card-title text-center mb-10  text-pink-800">
                 {book.name}
               </h2>
               <div className="title-price flex justify-around border-b border-pink-900 pb-3">
@@ -145,7 +145,7 @@ const BookDetails = () => {
               <p className="md:pl-10 card-text text-black pt-3 bona md:text-xl text-lg">
                 {book.description}
               </p>
-              <div className="buttons flex justify-end gap-4 px-4 text-lg my-4">
+              <div className="buttons flex md:flex-row flex-col justify-end md:gap-4 gap-1 px-4 text-lg my-4">
                 <button
                   className="bg-pink-800 text-white px-4 py-2 mb-2 rounded-md"
                   onClick={handleAddToCart}

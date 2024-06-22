@@ -175,7 +175,7 @@ const UpdateBook = () => {
                     <img
                       src={`/api/v1/book/book-photo/${id}`}
                       alt="book_photo"
-                      className="img img-responsive "
+                      className="max-w-xs"
                     />
                   </div>
                 )}
