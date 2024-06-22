@@ -111,7 +111,7 @@ const CartPage = () => {
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);
-      await updateProductQuantities(); // Ensure this function updates quantities correctly
+      await updateProductQuantities();
       navigate("/dashboard/user/orders");
       toast.success("Payment Completed Successfully");
     } catch (error) {
@@ -144,10 +144,10 @@ const CartPage = () => {
       await Promise.all(
         cart.map(async (item) => {
           console.log("Updating quantity for item:", item);
-          const quantityToBuy = item.numberOfItems; // Adjust how quantityToBuy is calculated
+          const quantityToBuy = item.numberOfItems;
           await axios.put("/api/v1/book/updateStock", {
             slug: item.slug,
-            quantityToBuy: quantityToBuy, // Ensure quantityToBuy is correctly set here
+            quantityToBuy: quantityToBuy,
           });
           console.log("Product quantity updated successfully for item:", item);
         })
@@ -160,12 +160,11 @@ const CartPage = () => {
   };
 
   useEffect(() => {
-    // Fetch product quantities from the database
     const fetchProductQuantities = async () => {
       try {
-        const bookIds = cart.map((item) => item._id); // Use bookIds here
+        const bookIds = cart.map((item) => item._id);
         const response = await axios.post("/api/v1/book/getQuantities", {
-          bookIds, // Ensure you're sending the correct field name
+          bookIds,
         });
         const quantities = response.data.quantities;
         setProductQuantities(quantities);
@@ -260,12 +259,11 @@ const CartPage = () => {
                             +
                           </button>
                         </div>
-                        <div>
-                          <span>
-                            Available in stock:
-                            {productQuantities[p._id] - p.numberOfItems}
+                        {productQuantities[p._id] - p.numberOfItems === 0 && (
+                          <span className="text-red-800 ml-2 text-base">
+                            No more left in stock
                           </span>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
