@@ -107,7 +107,7 @@ const AdminOrders = () => {
                             ))}
                           </Select>
                         </td>
-                        <td className="sm:p-2 p-1">{o.buyer.username}</td>
+                        <td className="sm:p-2 p-1">{o.buyer?.username}</td>
                         <td className="sm:p-2 p-1">
                           {formatDate(o.createdAt)}
                         </td>

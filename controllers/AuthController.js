@@ -23,7 +23,7 @@ const sendUserVerifyEmail = async (username, email, user_id) => {
       from: "starshollowb@gmail.com",
       to: email,
       subject: "Verify your stars hollow bookstore account",
-      html: `<p> Hi ${username},Please click here to <a href="${process.env.REACT_APP_API}/api/v1/auth/verify?id=${user_id}">verify</a>your email.</p>`,
+      html: `<p> Hi ${username},Please click <a href="${process.env.REACT_APP_API}/api/v1/auth/verify?id=${user_id}">here</a> to verify your email.</p>`,
     };
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
